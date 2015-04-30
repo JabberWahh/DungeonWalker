@@ -2,6 +2,7 @@ package com.jw.dw.chars;
 
 /**
  * Created by vahma on 27.04.15.
+ * Class Enemy
  */
 public class Enemy implements Characters {
 
@@ -27,6 +28,7 @@ public class Enemy implements Characters {
 
 
     public void SetDmg(Integer sdmg) {
+
         dmg = sdmg;
     }
 

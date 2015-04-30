@@ -2,8 +2,9 @@ package com.jw.dw.chars;
 
 /**
  * Created by vahma on 27.04.15.
+ * Chars: Hero, enemies, ets
  */
-public interface Characters {
+interface Characters {
 
     void SetHP(Integer shp);
 

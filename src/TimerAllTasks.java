@@ -1,4 +1,3 @@
-import com.jw.dw.chars.Enemy;
 import com.jw.dw.chars.EnemyCreator;
 import com.jw.dw.chars.Hero;
 
@@ -7,14 +6,15 @@ import javax.swing.Timer;
 
 /**
  * Created by vahma on 28.04.15.
+ * Battle time
  */
-public class TimerAllTasks {
+class TimerAllTasks {
 
-    public Hero hero;
-    public EnemyCreator ec;
-    public CharAction act;
-    public ArrayList enemyList;
-    public Timer timerMain;
+    private Hero hero;
+    private EnemyCreator ec;
+    private CharAction act;
+    private ArrayList enemyList;
+    private Timer timerMain;
 
 
     public TimerAllTasks(Hero h, EnemyCreator eCr, CharAction cAct, ArrayList eL) {
