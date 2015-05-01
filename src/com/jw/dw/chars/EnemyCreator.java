@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Created by vahma on 27.04.15.
+ * Creates enemies
  */
 public class EnemyCreator {
 

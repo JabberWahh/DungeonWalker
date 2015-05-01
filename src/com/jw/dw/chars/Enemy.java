@@ -9,6 +9,9 @@ public class Enemy implements Characters {
     private Integer hp;
     private Integer dmg;
     public Integer enemyName = 0;
+    public static final String icon = "g";
+    public Integer posX = 0;
+    public Integer posY = 0;
 
     public Enemy(Integer hpset, Integer dmgset, Integer nm) {
         hp = hpset;

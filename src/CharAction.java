@@ -8,6 +8,7 @@ import java.util.TimerTask;
 
 /**
  * Created by vahma on 27.04.15.
+ * Figting mode
  */
 public class CharAction {
 

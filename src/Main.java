@@ -1,4 +1,5 @@
 
+import com.jw.dw.Phases;
 import com.jw.dw.chars.EnemyCreator;
 import com.jw.dw.chars.Hero;
 
@@ -23,17 +24,14 @@ import javafx.scene.paint.Color;
 
 /**
  * Created by vahma on 27.04.15.
- * Main process
+ * Dungeon walker
  */
-class Main extends Application {
+public class Main extends Application {
 
     private static Timer timer;
-    private static Timer timerRendr;
     private static Group root;
     private static Rasterizer rastr;
 
-    private static Stage pS;
-    private static Scene sC;
     //gui initialization
 
     private AnimationTimer at = new AnimationTimer() {
@@ -47,28 +45,23 @@ class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        pS = primaryStage;
-
-        //primaryStage.setTitle("Drawing Text");
+        primaryStage.setTitle("Dungeon Walker");
         root = new Group();
         rastr = new Rasterizer();
         //
-        //rastr.Draw(root);
-        sC = new Scene(root, 800, 600, Color.rgb(34, 34, 34, 1));
 
-        timerRendr = new Timer(1000, e -> rastr.startDraw = true);
 
-        /*       timerRendr = new Timer(1000, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
+        Scene sC = new Scene(root, 1200, 880, Color.rgb(34, 34, 34, 1));
 
-                rastr.startDraw = true;
-
-            }
-        });*/
+        //Start render
+        Timer timerRendr = new Timer(1000, e -> rastr.startDraw = true);
 
         at.start();
-        pS.setScene(sC);
-        pS.show();
+        //
+
+
+        primaryStage.setScene(sC);
+        primaryStage.show();
 
 
         timerRendr.start();
@@ -77,16 +70,6 @@ class Main extends Application {
             Platform.exit();
             System.exit(0);
         });
-
-        /*
-              primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent t) {
-                Platform.exit();
-                System.exit(0);
-            }
-        });
-         */
 
 
     }
@@ -109,16 +92,22 @@ class Main extends Application {
         CharAction act = CharAction.GetInstance();
         act.StartBattle(hero, enemyList);
 
-
         TimerAllTasks task = new TimerAllTasks(hero, ec, act, enemyList);
 
-
-        timer = new Timer(100, e -> task.run(timer));
+        //Fighting phase
+        //timer = new Timer(100, e -> task.run(timer));
 
         //timer.start();
+        //
 
+        //Mooving phase
+        timer = new Timer(1000, e -> task.run(timer));
+        task.phase = Phases.MOOVING;
+        timer.start();
+        //
 
         launch(args);
+
 
     }
 }
