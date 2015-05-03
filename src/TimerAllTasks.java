@@ -1,4 +1,5 @@
 import com.jw.dw.AI.AStar;
+import com.jw.dw.Ambient.AmbientEmpty;
 import com.jw.dw.Phases;
 import com.jw.dw.chars.EnemyCreator;
 import com.jw.dw.chars.Hero;
@@ -19,6 +20,7 @@ class TimerAllTasks {
     private CharAction act;
     private ArrayList enemyList;
     public Phases phase;
+    private String[][] field;
 
     private ArrayList route;
     //private Point tmpPoint;
@@ -80,14 +82,22 @@ class TimerAllTasks {
 
         if (phase == Phases.MOOVING) {
 
+            //Поиск пути
             AStar aStar = AStar.GetInstance();
+            /*
             if (!aStar.routeFound) {
                 aStar.Start();
-            }
+            }*/
 
 
             WorldField sf = WorldField.GetInstance();
-            String[][] field = sf.GetField();
+
+            field = sf.GetField();
+
+            //Анимация перемещения
+            /*while (!aStar.routeFound) {
+                field = sf.GetField();
+            }*/
 
 
             if (aStar.routeFound) {
@@ -98,8 +108,8 @@ class TimerAllTasks {
                         for (int j = 0; j < sf.HEIGHT; j++) {
                             if (!done) {
                                 if (Objects.equals(field[i][j], Hero.icon)) {
-                                    field[aStar.arX.get(aStar.arX.size() - 1)][aStar.arY.get(aStar.arY.size() - 1)] = "@";
-                                    field[i][j] = "•";
+                                    field[aStar.arX.get(aStar.arX.size() - 1)][aStar.arY.get(aStar.arY.size() - 1)] = Hero.icon;
+                                    field[i][j] = AmbientEmpty.icon;
                                     done = true;
                                 }
                             }

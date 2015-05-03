@@ -13,7 +13,7 @@ import java.util.TimerTask;
 public class CharAction {
 
     private Hero hero;
-    private ArrayList enemy;
+    private ArrayList<Enemy> enemy;
     public boolean battleStarted;
 
     private static CharAction instance;
@@ -76,8 +76,6 @@ public class CharAction {
             };
             timer2.scheduleAtFixedRate(task, 100, 100);
         }
-
-
 
 
     }

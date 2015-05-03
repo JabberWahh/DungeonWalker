@@ -4,6 +4,7 @@ import com.jw.dw.chars.EnemyCreator;
 import com.jw.dw.chars.Hero;
 
 import com.jw.dw.gui.Rasterizer;
+import com.jw.dw.gui.WorldField;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -50,12 +51,12 @@ public class Main extends Application {
         rastr = new Rasterizer();
         //
 
-
         Scene sC = new Scene(root, 1200, 880, Color.rgb(34, 34, 34, 1));
 
         //Start render
         Timer timerRendr = new Timer(1000, e -> rastr.startDraw = true);
 
+        WorldField sf = WorldField.GetInstance();
         at.start();
         //
 
@@ -103,7 +104,7 @@ public class Main extends Application {
         //Mooving phase
         timer = new Timer(1000, e -> task.run(timer));
         task.phase = Phases.MOOVING;
-        timer.start();
+        //timer.start();
         //
 
         launch(args);

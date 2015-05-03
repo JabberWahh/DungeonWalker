@@ -1,12 +1,15 @@
 package com.jw.dw.gui;
 
 
+import com.jw.dw.Ambient.AmbientDoor;
+import com.jw.dw.Ambient.AmbientEmpty;
 import com.jw.dw.Ambient.AmbientWall;
+import com.jw.dw.chars.Enemy;
+import com.jw.dw.chars.Hero;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.animation.*;
 
 import java.util.Objects;
 
@@ -16,7 +19,6 @@ import java.util.Objects;
  * Drawer
  */
 public class Rasterizer {
-    private static Timeline timeline;
     public boolean startDraw;
 
     public void Draw(Group root) {
@@ -47,7 +49,7 @@ public class Rasterizer {
                 for (int j = 0; j < sf.HEIGHT; j++) {
 
 
-                    String ch = "•";
+                    String ch = AmbientEmpty.icon;
                     if (field[i][j] != null) {
                         ch = field[i][j];
                     }
@@ -59,6 +61,15 @@ public class Rasterizer {
                     text.setFill(Color.rgb(0, 153, 51, 1));
                     if (Objects.equals(ch, AmbientWall.icon)) {
                         text.setFill(Color.rgb(107, 71, 36));
+                    }
+                    if (Objects.equals(ch, Hero.icon)) {
+                        text.setFill(Color.rgb(51, 173, 255));
+                    }
+                    if (Objects.equals(ch, Enemy.icon)) {
+                        text.setFill(Color.rgb(255, 71, 25));
+                    }
+                    if (Objects.equals(ch, AmbientDoor.icon)) {
+                        text.setFill(Color.rgb(230, 230, 0));
                     }
 
                     text.setRotate(0);
