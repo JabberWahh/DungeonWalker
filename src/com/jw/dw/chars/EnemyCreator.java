@@ -30,7 +30,7 @@ public class EnemyCreator {
             enemyBand.add(new Enemy(50, 3, (int) (Math.random() * 100 + 1)));
         }
 
-        System.out.println("Created " + count + " enemys");
+        //System.out.println("Created " + count + " enemys");
         return enemyBand;
     }
 }

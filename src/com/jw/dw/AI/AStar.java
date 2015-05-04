@@ -6,7 +6,7 @@ package com.jw.dw.AI;
  */
 
 import com.jw.dw.Ambient.AmbientWall;
-import com.jw.dw.chars.Enemy;
+import com.jw.dw.chars.Aim;
 import com.jw.dw.chars.Hero;
 import com.jw.dw.gui.WorldField;
 
@@ -52,6 +52,9 @@ public class AStar {
 
         String[][] wF = wFObj.GetField();
 
+        Hero hero = Hero.GetInstance();
+        Aim aim = Aim.GetInstance();
+
         for (int i = 0; i < wFObj.WIDTH; i++) {
             for (int j = 0; j < wFObj.HEIGHT; j++) {
                 //Это преграда
@@ -72,16 +75,25 @@ public class AStar {
         // Стартовая и конечная
 
 
+        cellList.get(hero.posX, hero.posY).setAsStart();
+        start = cellList.get(hero.posX, hero.posY);
+
         for (int i = 0; i < wFObj.WIDTH; i++) {
             for (int j = 0; j < wFObj.HEIGHT; j++) {
-                if (Objects.equals(wF[i][j], Hero.icon)) {
+                /*if (Objects.equals(wF[i][j], Hero.icon)) {
                     cellList.get(i, j).setAsStart();
                     start = cellList.get(i, j);
-                }
-                if (Objects.equals(wF[i][j], Enemy.icon)) {
+                }*/
+                /*if (Objects.equals(wF[i][j], Enemy.icon)) {
                     cellList.get(i, j).setAsFinish();
                     finish = cellList.get(i, j);
-                }
+                    aim.SetPosition(i,j);
+
+                }*/
+                cellList.get(aim.posX, aim.posY).setAsFinish();
+                finish = cellList.get(aim.posX, aim.posY);
+                arX.add(aim.posX);
+                arY.add(aim.posY);
             }
         }
 
@@ -175,6 +187,7 @@ public class AStar {
                 rd = rd.parent;
                 if (rd == null) break;
             }
+
             //cellList.printp();
             //return cellList;
         } else {

@@ -1,6 +1,7 @@
 package com.jw.dw.gui;
 
 
+import com.jw.dw.Ambient.AmbientChest;
 import com.jw.dw.Ambient.AmbientDoor;
 import com.jw.dw.Ambient.AmbientEmpty;
 import com.jw.dw.Ambient.AmbientWall;
@@ -69,7 +70,13 @@ public class Rasterizer {
                         text.setFill(Color.rgb(255, 71, 25));
                     }
                     if (Objects.equals(ch, AmbientDoor.icon)) {
-                        text.setFill(Color.rgb(230, 230, 0));
+                        text.setFill(Color.rgb(194, 194, 214));
+                    }
+                    if (Objects.equals(ch, "A")) {
+                        text.setFill(Color.rgb(255, 51, 153));
+                    }
+                    if (Objects.equals(ch, AmbientChest.icon)) {
+                        text.setFill(Color.rgb(255, 255, 153));
                     }
 
                     text.setRotate(0);

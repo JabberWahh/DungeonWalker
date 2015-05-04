@@ -1,5 +1,8 @@
+import com.jw.dw.Ambient.ActionPoint;
+import com.jw.dw.Ambient.ActionSpot;
 import com.jw.dw.chars.Enemy;
 import com.jw.dw.chars.Hero;
+import com.jw.dw.gui.WorldField;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -78,6 +81,39 @@ public class CharAction {
         }
 
 
+    }
+
+    public void Action() {
+        WorldField wf = WorldField.GetInstance();
+        Hero hero = Hero.GetInstance();
+
+        System.out.println("hero " + hero.posX + " " +hero.posY);
+
+        ArrayList<ActionSpot> asList = wf.actionSpots;
+        boolean actionFound = false;
+        int neededActionSpot = -1;
+        for (int i = 0; i < asList.size() && !actionFound; i++) {
+            ArrayList<ActionPoint> apList;
+            apList = asList.get(i).actionPoints;
+            for (int j = 0; j < apList.size() && !actionFound; j++) {
+                ActionPoint ap = apList.get(j);
+                System.out.println("ap " + ap.x + " " +ap.y);
+                if (ap.x == hero.posX && ap.y == hero.posY && !asList.get(i).activated) {
+                    neededActionSpot = i;
+                    asList.get(i).activated = true;
+                    actionFound = true;
+                }
+            }
+        }
+
+        if (neededActionSpot > -1) {
+            ActionSpot actionSpot = asList.get(neededActionSpot);
+            for (int i = actionSpot.lightXUp; i < actionSpot.lightXDown + 1; i++) {
+                for (int j = actionSpot.lightYUp; j < actionSpot.lightYDown + 1; j++) {
+                    wf.worldField[i][j] = ".";
+                }
+            }
+        }
     }
 
 }

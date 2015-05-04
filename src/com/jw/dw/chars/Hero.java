@@ -11,6 +11,16 @@ public class Hero implements Characters {
     public static final String icon = "@";
     public Integer posX = 0;
     public Integer posY = 0;
+    private static Hero instance;
+
+    private Hero(){}
+
+    public static Hero GetInstance() {
+        if (instance == null) {
+            instance = new Hero();
+        }
+        return instance;
+    }
 
     public void SetHP(Integer shp) {
         hp = shp;
@@ -29,6 +39,11 @@ public class Hero implements Characters {
     public Integer GetHP() {
 
         return hp;
+    }
+
+    public void SetPosition(int x, int y){
+        posX = x;
+        posY = y;
     }
 
 }

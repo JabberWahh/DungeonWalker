@@ -82,7 +82,7 @@ public class Main extends Application {
 
         System.out.println("Started...");
 
-        Hero hero = new Hero();
+        Hero hero =  Hero.GetInstance();
         hero.SetHP(100);
         hero.SetDmg(5);
 
@@ -91,7 +91,7 @@ public class Main extends Application {
 
 
         CharAction act = CharAction.GetInstance();
-        act.StartBattle(hero, enemyList);
+        //act.StartBattle(hero, enemyList);
 
         TimerAllTasks task = new TimerAllTasks(hero, ec, act, enemyList);
 
@@ -104,7 +104,7 @@ public class Main extends Application {
         //Mooving phase
         timer = new Timer(1000, e -> task.run(timer));
         task.phase = Phases.MOOVING;
-        //timer.start();
+        timer.start();
         //
 
         launch(args);

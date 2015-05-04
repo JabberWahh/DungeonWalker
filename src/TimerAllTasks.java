@@ -1,4 +1,5 @@
 import com.jw.dw.AI.AStar;
+import com.jw.dw.Ambient.AmbientDoor;
 import com.jw.dw.Ambient.AmbientEmpty;
 import com.jw.dw.Phases;
 import com.jw.dw.chars.EnemyCreator;
@@ -6,7 +7,6 @@ import com.jw.dw.chars.Hero;
 import com.jw.dw.gui.WorldField;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import javax.swing.Timer;
 
 /**
@@ -21,6 +21,8 @@ class TimerAllTasks {
     private ArrayList enemyList;
     public Phases phase;
     private String[][] field;
+    private boolean enemySpoted = false;
+    private String tmpChar = AmbientEmpty.icon;
 
     private ArrayList route;
     //private Point tmpPoint;
@@ -39,6 +41,7 @@ class TimerAllTasks {
         //
         phase = Phases.MOOVING;
         //
+
 
         if (phase == Phases.FIGHT) {
 
@@ -84,15 +87,26 @@ class TimerAllTasks {
 
             //Поиск пути
             AStar aStar = AStar.GetInstance();
-            /*
-            if (!aStar.routeFound) {
-                aStar.Start();
-            }*/
+
+
+
+
+
+
+
 
 
             WorldField sf = WorldField.GetInstance();
-
             field = sf.GetField();
+
+
+
+
+            if (!aStar.routeFound) {
+                aStar.Start();
+            }
+
+
 
             //Анимация перемещения
             /*while (!aStar.routeFound) {
@@ -100,7 +114,7 @@ class TimerAllTasks {
             }*/
 
 
-            if (aStar.routeFound) {
+            /*if (aStar.routeFound) {
 
                 if (aStar.arX.size() != 0) {
                     boolean done = false;
@@ -108,9 +122,11 @@ class TimerAllTasks {
                         for (int j = 0; j < sf.HEIGHT; j++) {
                             if (!done) {
                                 if (Objects.equals(field[i][j], Hero.icon)) {
-                                    field[aStar.arX.get(aStar.arX.size() - 1)][aStar.arY.get(aStar.arY.size() - 1)] = Hero.icon;
                                     field[i][j] = AmbientEmpty.icon;
+                                    field[aStar.arX.get(aStar.arX.size() - 1)][aStar.arY.get(aStar.arY.size() - 1)] = Hero.icon;
                                     done = true;
+
+
                                 }
                             }
                         }
@@ -119,6 +135,27 @@ class TimerAllTasks {
                     aStar.arX.remove(aStar.arX.size() - 1);
                     aStar.arY.remove(aStar.arY.size() - 1);
                 }
+            }*/
+
+            if (aStar.routeFound) {
+
+                if (aStar.arX.size() != 0) {
+                    field[hero.posX][hero.posY] = tmpChar;
+                    tmpChar = field[aStar.arX.get(aStar.arX.size() - 1)][aStar.arY.get(aStar.arY.size() - 1)];
+
+
+
+                    hero.SetPosition(aStar.arX.get(aStar.arX.size() - 1),aStar.arY.get(aStar.arY.size() - 1));
+                    field[aStar.arX.get(aStar.arX.size() - 1)][aStar.arY.get(aStar.arY.size() - 1)] = Hero.icon;
+                    if(tmpChar == AmbientDoor.icon){
+                        act.Action();
+                    }
+                    aStar.arX.remove(aStar.arX.size() - 1);
+                    aStar.arY.remove(aStar.arY.size() - 1);
+
+
+                }
+
             }
 
         }
