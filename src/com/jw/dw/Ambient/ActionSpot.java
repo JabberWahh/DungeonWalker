@@ -1,5 +1,6 @@
 package com.jw.dw.Ambient;
 
+import com.jw.dw.gui.WorldField;
 import com.jw.dw.randInt;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class ActionSpot {
     public ArrayList<ActionPoint> actionPoints;
     public boolean exit = false;
     public boolean activated = false;
+    public String icon = "○";
 
     public ActionSpot(int xUp, int xDown, int yUp, int yDown) {
         actionPoints = new ArrayList<>();
@@ -33,5 +35,35 @@ public class ActionSpot {
     }
 
 
+    public static void RemoveUnnecessaryPoints(){
+        WorldField wf = WorldField.GetInstance();
+        ArrayList<ActionSpot> asList = wf.actionSpots;
+
+        for(int i=asList.size()-1; i>-1;i--){
+            ArrayList apList = asList.get(i).actionPoints;
+            for(int j=apList.size()-1;j>-1;j--){
+                ActionPoint ap = (ActionPoint)apList.get(j);
+                if(wf.worldField[ap.x][ap.y].wall){
+                    apList.remove(j);
+                }
+            }
+            if(apList.size() == 0){
+                asList.remove(i);
+            }
+        }
+
+        //Adding exit spot
+
+        ActionSpot as = asList.get(randInt.GetRandInt(0, asList.size() - 1));
+        as.exit = true;
+        wf.worldField[as.x][as.y].icon = "☼";
+
+    }
+
+    public static ActionSpot FindWithCoords(ActionSpot as,int xCoord,int yCoords){
+
+
+        return null;
+    }
 
 }

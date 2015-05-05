@@ -8,12 +8,15 @@ public class CellMap {
     public int y;
     public boolean wall = true;
     public String icon = AmbientWall.icon;
+    public boolean visible = false;
+    public AmbientEnum kind;
 
-    public CellMap(int xPos, int yPos, boolean canWalk, String iconShow){
+    public CellMap(int xPos, int yPos, boolean wall , String icon, AmbientEnum cellkind){
         x = xPos;
         y= yPos;
-        wall = canWalk;
-        icon = iconShow;
+        this.wall = wall;
+        this.icon = icon;
+        this.kind = cellkind;
     }
 
 }

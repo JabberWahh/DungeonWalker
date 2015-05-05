@@ -17,7 +17,7 @@ public class WorldField {
 
     private static WorldField instance;
 
-    public String[][] worldField;
+    public CellMap[][] worldField;
     public final int WIDTH = 50;
     public final int HEIGHT = 50;
     private boolean seted;
@@ -32,7 +32,7 @@ public class WorldField {
     private WorldField() {
     }
 
-    public String[][] GetField() {
+    public CellMap[][] GetField() {
         if (!seted) {
             SetField();
         }
@@ -50,7 +50,7 @@ public class WorldField {
 
     public void SetField() {
 
-        worldField = new String[WIDTH][HEIGHT];
+        worldField = new CellMap[WIDTH][HEIGHT];
         doorPositionX = new ArrayList<>();
         doorPositionY = new ArrayList<>();
         doorDirectionX = new ArrayList<>();
@@ -62,7 +62,7 @@ public class WorldField {
 
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < WIDTH; j++) {
-                worldField[i][j] = AmbientWall.icon;
+                worldField[i][j] = new CellMap(i, j, true, AmbientWall.icon, AmbientEnum.Wall);
             }
         }
 
@@ -80,12 +80,13 @@ public class WorldField {
 
 
         for (ActionSpot actionSpot : actionSpots) {
-            worldField[actionSpot.x][actionSpot.y] = "A";
+            worldField[actionSpot.x][actionSpot.y].icon = "○";
         }
 
         ConvertDoor();
 
         Aim aim = Aim.GetInstance();
+        ActionSpot.RemoveUnnecessaryPoints();
         aim.SetAimToRandomDoor();
 
     }
@@ -102,72 +103,81 @@ public class WorldField {
         if (x == 0) {
             x = ((int) (Math.random() * (WIDTH - 7))) + 3;
             y = ((int) (Math.random() * (HEIGHT - 7))) + 3;
-            for (int i = -1; i < 2; i++) {
-                for (int j = -1; j < 2; j++) {
-                    worldField[x + i][y + j] = AmbientEmpty.icon;
-                }
-            }
-
-        } else {
-            for (int i = -1; i < 2; i++) {
-                for (int j = -1; j < 2; j++) {
-                    worldField[x + i][y + j] = AmbientEmpty.icon;
-                }
+        }
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                worldField[x + i][y + j].icon = AmbientEmpty.icon;
+                worldField[x + i][y + j].wall = false;
+                worldField[x + i][y + j].kind = AmbientEnum.Empty;
             }
         }
+        for (int i = -2; i < 3; i++) {
+            for (int j = -2; j < 3; j++) {
+                worldField[x + i][y + j].visible = true;
+            }
+        }
+
+        for (int i = 0; i < WIDTH; i++) {
+            worldField[i][0].visible = true;
+            worldField[i][HEIGHT -1].visible = true;
+            worldField[0][i].visible = true;
+            worldField[WIDTH -1][i].visible = true;
+        }
+
+
+
 
         Hero hero = Hero.GetInstance();
         hero.SetPosition(x, y);
-        worldField[x][y] = Hero.icon;
+        worldField[x][y].icon = Hero.icon;
 
-        actionSpots.add(new ActionSpot(x, x, y, y));
+        //actionSpots.add(new ActionSpot(x, x, y, y));
 
         if (x > 2) {
-            worldField[x - 2][y] = AmbientDoor.icon;
-            CreateDoor(x - 2, y);//, actionSpots.get(actionSpots.size() - 1));
+            worldField[x - 2][y].icon = AmbientDoor.icon;
+            worldField[x - 2][y].wall = false;
+            CreateDoor(x - 2, y);
         }
         if (y > 2) {
-            worldField[x][y - 2] = AmbientDoor.icon;
-            CreateDoor(x, y - 2);//, actionSpots.get(actionSpots.size() - 1));
+            worldField[x][y - 2].icon = AmbientDoor.icon;
+            worldField[x][y - 2].wall = false;
+            CreateDoor(x, y - 2);
         }
         if (x < WIDTH - 2) {
-            worldField[x + 2][y] = AmbientDoor.icon;
-            CreateDoor(x + 2, y);//, actionSpots.get(actionSpots.size() - 1));
+            worldField[x + 2][y].icon = AmbientDoor.icon;
+            worldField[x + 2][y].wall = false;
+            CreateDoor(x + 2, y);
         }
         if (y < HEIGHT - 2) {
-            worldField[x][y + 2] = AmbientDoor.icon;
-            CreateDoor(x, y + 2);//, actionSpots.get(actionSpots.size() - 1));
+            worldField[x][y + 2].icon = AmbientDoor.icon;
+            worldField[x][y + 2].wall = false;
+            CreateDoor(x, y + 2);
         }
 
-        actionSpots.clear();
-        //actionSpots.remove(actionSpots.size() - 1); //deleting unnesesary spot
-
-
+        //actionSpots.clear();
     }
 
     private void CreateDoor(int x, int y) {
         doorPositionX.add(x);
         doorPositionY.add(y);
+        worldField[x][y].kind = AmbientEnum.Door;
         //as.AddActionPoint(x, y);
-        if (Objects.equals(worldField[x - 1][y], AmbientEmpty.icon)) {
+        if (!worldField[x - 1][y].wall) {
             doorDirectionX.add(1);
             doorDirectionY.add(0);
 
         }
-        if (Objects.equals(worldField[x + 1][y], AmbientEmpty.icon)) {
+        if (!worldField[x + 1][y].wall) {
             doorDirectionX.add(-1);
             doorDirectionY.add(0);
-            // as.AddActionPoint(x, y);
         }
-        if (Objects.equals(worldField[x][y - 1], AmbientEmpty.icon)) {
+        if (!worldField[x][y - 1].wall) {
             doorDirectionY.add(1);
             doorDirectionX.add(0);
-            // as.AddActionPoint(x, y);
         }
-        if (Objects.equals(worldField[x][y + 1], AmbientEmpty.icon)) {
+        if (!worldField[x][y + 1].wall) {
             doorDirectionY.add(-1);
             doorDirectionX.add(0);
-            // as.AddActionPoint(x, y);
         }
     }
 
@@ -269,10 +279,10 @@ public class WorldField {
 
                 for (int i = xUp - 1; i < xDown + 2; i++) {
                     for (int j = yUp - 1; j < yDown + 2; j++) {
-                        if (!Objects.equals(worldField[i][j], AmbientWall.icon) && !Objects.equals(worldField[i][j], AmbientDoor.icon)) {
+                        if (!worldField[i][j].wall && worldField[i][j].icon != AmbientDoor.icon) {
                             success = false;
                         } else {
-                            if (Objects.equals(worldField[i][j], AmbientDoor.icon)) {
+                            if (worldField[i][j].icon == AmbientDoor.icon) {
                                 numOfDoors = numOfDoors + 1;
                             }
                         }
@@ -290,11 +300,10 @@ public class WorldField {
             if (success) {//рисуем
                 for (int i = xUp; i < xDown + 1; i++) {
                     for (int j = yUp; j < yDown + 1; j++) {
-                        worldField[i][j] = AmbientEmpty.icon;
+                        worldField[i][j].icon = AmbientEmpty.icon;
+                        worldField[i][j].wall = false;
                     }
                 }
-
-
 
 
                 //Добавление дверей
@@ -303,54 +312,59 @@ public class WorldField {
                 int rnd;
                 rnd = randInt.GetRandInt(0, sizeX - 1);
                 if (xUp + rnd + 1 > 0 && yUp - 2 > 0) {
-                    if (Objects.equals(worldField[xUp + rnd][yUp - 2], AmbientWall.icon)
-                            && Objects.equals(worldField[xUp + rnd - 1][yUp - 1], AmbientWall.icon)
-                            && Objects.equals(worldField[xUp + rnd + 1][yUp - 1], AmbientWall.icon)) {
-                        worldField[xUp + rnd][yUp - 1] = AmbientDoor.icon;
-                        CreateDoor(xUp + rnd, yUp - 1);//, actionSpots.get(actionSpots.size() - 1));
+                    if (worldField[xUp + rnd][yUp - 2].wall
+                            && worldField[xUp + rnd - 1][yUp - 1].wall
+                            && worldField[xUp + rnd + 1][yUp - 1].wall) {
+                        worldField[xUp + rnd][yUp - 1].icon = AmbientDoor.icon;
+                        worldField[xUp + rnd][yUp - 1].wall = false;
+                        CreateDoor(xUp + rnd, yUp - 1);
                     }
                 }
 
                 //нижний ряд
                 rnd = randInt.GetRandInt(0, sizeX - 1);
                 if (xUp + rnd + 1 > 0 && yDown + 2 < HEIGHT) {
-                    if (Objects.equals(worldField[xUp + rnd][yDown + 2], AmbientWall.icon)
-                            && Objects.equals(worldField[xUp + rnd - 1][yDown + 1], AmbientWall.icon)
-                            && Objects.equals(worldField[xUp + rnd - 1][yDown + 1], AmbientWall.icon)) {
-                        worldField[xUp + rnd][yDown + 1] = AmbientDoor.icon;
-                        CreateDoor(xUp + rnd, yDown + 1);//, actionSpots.get(actionSpots.size() - 1));
+                    if (worldField[xUp + rnd][yDown + 2].wall
+                            && worldField[xUp + rnd - 1][yDown + 1].wall
+                            && worldField[xUp + rnd - 1][yDown + 1].wall) {
+                        worldField[xUp + rnd][yDown + 1].icon = AmbientDoor.icon;
+                        worldField[xUp + rnd][yDown + 1].wall = false;
+                        CreateDoor(xUp + rnd, yDown + 1);
                     }
                 }
 
                 //правый ряд
                 rnd = randInt.GetRandInt(0, sizeY - 1);
                 if (xDown + 2 < WIDTH && yUp + rnd + 1 < HEIGHT) {
-                    if (Objects.equals(worldField[xDown + 2][yUp + rnd], AmbientWall.icon)
-                            && Objects.equals(worldField[xDown + 1][yUp + rnd - 1], AmbientWall.icon)
-                            && Objects.equals(worldField[xDown + 1][yUp + rnd + 1], AmbientWall.icon)) {
-                        worldField[xDown + 1][yUp + rnd] = AmbientDoor.icon;
-                        CreateDoor(xDown + 1, yUp + rnd);//, actionSpots.get(actionSpots.size() - 1));
+                    if (worldField[xDown + 2][yUp + rnd].wall
+                            && worldField[xDown + 1][yUp + rnd - 1].wall
+                            && worldField[xDown + 1][yUp + rnd + 1].wall) {
+                        worldField[xDown + 1][yUp + rnd].icon = AmbientDoor.icon;
+                        worldField[xDown + 1][yUp + rnd].wall = false;
+                        CreateDoor(xDown + 1, yUp + rnd);
                     }
                 }
 
                 //левый ряд
                 rnd = randInt.GetRandInt(0, sizeY - 1);
                 if (xUp - 2 > 0 && yUp + rnd + 1 < HEIGHT) {
-                    if (Objects.equals(worldField[xUp - 2][yUp + rnd], AmbientWall.icon)
-                            && Objects.equals(worldField[xUp - 1][yUp + rnd - 1], AmbientWall.icon)
-                            && Objects.equals(worldField[xUp - 1][yUp + rnd + 1], AmbientWall.icon)) {
-                        worldField[xUp - 1][yUp + rnd] = AmbientDoor.icon;
-                        CreateDoor(xUp - 1, yUp + rnd);//, actionSpots.get(actionSpots.size() - 1));
+                    if (worldField[xUp - 2][yUp + rnd].wall
+                            && worldField[xUp - 1][yUp + rnd - 1].wall
+                            && worldField[xUp - 1][yUp + rnd + 1].wall) {
+                        worldField[xUp - 1][yUp + rnd].icon = AmbientDoor.icon;
+                        worldField[xUp - 1][yUp + rnd].wall = false;
+                        CreateDoor(xUp - 1, yUp + rnd);
                     }
                 }
 
                 //Добавим в текущий ActionSpots все двери вокруг него
                 ActionSpot curAs = new ActionSpot(xUp, xDown, yUp, yDown);
                 actionSpots.add(curAs);
+                worldField[curAs.x][curAs.y].kind = AmbientEnum.ActionSpot;
                 curAs = actionSpots.get(actionSpots.size() - 1);
                 for (int i = xUp - 1; i < xDown + 2; i++) {
                     for (int j = yUp - 1; j < yDown + 2; j++) {
-                        if (worldField[i][j] == AmbientDoor.icon) {
+                        if (worldField[i][j].icon == AmbientDoor.icon) {
                             curAs.AddActionPoint(i, j);
                         }
                     }
@@ -370,16 +384,16 @@ public class WorldField {
     private void ConvertDoor() {
         for (int i = 1; i < HEIGHT - 1; i++) {
             for (int j = 1; j < WIDTH - 1; j++) {
-                if (worldField[i][j] == AmbientDoor.icon) {
+                if (worldField[i][j].icon == AmbientDoor.icon) {
                     boolean itsDoor = false;
-                    if (worldField[i - 1][j] == AmbientEmpty.icon || worldField[i - 1][j] == "A") {
-                        if (worldField[i + 1][j] == AmbientEmpty.icon || worldField[i + 1][j] == "A") {
+                    if (!worldField[i - 1][j].wall) {
+                        if (!worldField[i + 1][j].wall) {
                             itsDoor = true;
 
                         }
                     }
-                    if (worldField[i][j - 1] == AmbientEmpty.icon || worldField[i][j - 1] == "A") {
-                        if (worldField[i][j + 1] == AmbientEmpty.icon || worldField[i][j + 1] == "A") {
+                    if (!worldField[i][j - 1].wall) {
+                        if (!worldField[i][j + 1].wall) {
                             itsDoor = true;
 
                         }
@@ -387,9 +401,10 @@ public class WorldField {
 
                     if (!itsDoor) {
                         if (randInt.GetRandInt(1, 20) == 20) {
-                            worldField[i][j] = AmbientChest.icon;
+                            worldField[i][j].icon = AmbientChest.icon;
                         } else {
-                            worldField[i][j] = AmbientWall.icon;
+                            worldField[i][j].icon = AmbientWall.icon;
+                            worldField[i][j].wall = true;
                         }
                     }
                 }

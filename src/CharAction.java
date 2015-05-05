@@ -1,5 +1,7 @@
+import com.jw.dw.AI.AStar;
 import com.jw.dw.Ambient.ActionPoint;
 import com.jw.dw.Ambient.ActionSpot;
+import com.jw.dw.chars.Aim;
 import com.jw.dw.chars.Enemy;
 import com.jw.dw.chars.Hero;
 import com.jw.dw.gui.WorldField;
@@ -83,35 +85,60 @@ public class CharAction {
 
     }
 
-    public void Action() {
-        WorldField wf = WorldField.GetInstance();
+    public void DoorMooving() {
         Hero hero = Hero.GetInstance();
+        if (hero.mooved) {
+            WorldField wf = WorldField.GetInstance();
 
-        System.out.println("hero " + hero.posX + " " +hero.posY);
+            hero.mooved = false;
+            //System.out.println("hero " + hero.posX + " " + hero.posY);
 
-        ArrayList<ActionSpot> asList = wf.actionSpots;
-        boolean actionFound = false;
-        int neededActionSpot = -1;
-        for (int i = 0; i < asList.size() && !actionFound; i++) {
-            ArrayList<ActionPoint> apList;
-            apList = asList.get(i).actionPoints;
-            for (int j = 0; j < apList.size() && !actionFound; j++) {
-                ActionPoint ap = apList.get(j);
-                System.out.println("ap " + ap.x + " " +ap.y);
-                if (ap.x == hero.posX && ap.y == hero.posY && !asList.get(i).activated) {
-                    neededActionSpot = i;
-                    asList.get(i).activated = true;
-                    actionFound = true;
+            ArrayList<ActionSpot> asList = wf.actionSpots;
+            boolean actionFound = false;
+            int neededActionSpot = -1;
+            for (int i = 0; i < asList.size() && !actionFound; i++) {
+                ArrayList<ActionPoint> apList;
+                apList = asList.get(i).actionPoints;
+                for (int j = 0; j < apList.size() && !actionFound; j++) {
+                    ActionPoint ap = apList.get(j);
+                    System.out.println("ap " + ap.x + " " + ap.y);
+                    if (ap.x == hero.posX && ap.y == hero.posY && !asList.get(i).activated) {
+                        neededActionSpot = i;
+                        asList.get(i).activated = true;
+                        actionFound = true;
+                    }
                 }
             }
-        }
 
-        if (neededActionSpot > -1) {
-            ActionSpot actionSpot = asList.get(neededActionSpot);
-            for (int i = actionSpot.lightXUp; i < actionSpot.lightXDown + 1; i++) {
-                for (int j = actionSpot.lightYUp; j < actionSpot.lightYDown + 1; j++) {
-                    wf.worldField[i][j] = ".";
+            if (neededActionSpot > -1) {
+                ActionSpot actionSpot = asList.get(neededActionSpot);
+
+                //Do smth with ActionSpot
+
+                //Lightning
+                for (int i = actionSpot.lightXUp - 1; i < actionSpot.lightXDown + 2; i++) {
+                    for (int j = actionSpot.lightYUp - 1; j < actionSpot.lightYDown + 2; j++) {
+                        wf.worldField[i][j].visible = true;
+                    }
                 }
+
+                //
+
+                if (actionSpot.exit){
+                    //Next lvl
+                }
+               /* else{
+                    Aim aim = Aim.GetInstance();
+                    aim.posX = actionSpot.x;
+                    aim.posY = actionSpot.y;
+                    AStar aStar = AStar.GetInstance();
+                    aStar.Start();
+                }*/
+
+
+                //Deletig spot
+                asList.remove(neededActionSpot);
+
             }
         }
     }

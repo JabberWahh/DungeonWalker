@@ -33,19 +33,6 @@ public class Aim {
         WorldField wf = WorldField.GetInstance();
         ArrayList<ActionSpot> asList = wf.actionSpots;
 
-        for(int i=asList.size()-1; i>-1;i--){
-            ArrayList apList = asList.get(i).actionPoints;
-            for(int j=apList.size()-1;j>-1;j--){
-                ActionPoint ap = (ActionPoint)apList.get(j);
-                if(wf.worldField[ap.x][ap.y] == AmbientWall.icon){
-                    apList.remove(j);
-                }
-            }
-            if(apList.size() == 0){
-                asList.remove(i);
-            }
-        }
-
         ActionSpot as2 = asList.get(randInt.GetRandInt(0, asList.size() - 1));
         ArrayList apList2 = as2.actionPoints;
         ActionPoint ap = (ActionPoint)apList2.get(randInt.GetRandInt(0, apList2.size() - 1));

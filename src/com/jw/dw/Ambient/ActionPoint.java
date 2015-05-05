@@ -6,6 +6,7 @@ package com.jw.dw.Ambient;
 public class ActionPoint {
     public int x;
     public int y;
+    public boolean activated;
 
     public   ActionPoint(int xCoord, int yCoord) {
         x = xCoord;

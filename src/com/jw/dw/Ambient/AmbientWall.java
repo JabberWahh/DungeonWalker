@@ -5,5 +5,5 @@ package com.jw.dw.Ambient;
  * Non passed walls
  */
 public class AmbientWall implements Ambient {
-    public static final String icon = "#";
+    public static final String icon = "▒";
 }

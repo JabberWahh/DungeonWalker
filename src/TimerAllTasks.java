@@ -1,6 +1,8 @@
 import com.jw.dw.AI.AStar;
 import com.jw.dw.Ambient.AmbientDoor;
 import com.jw.dw.Ambient.AmbientEmpty;
+import com.jw.dw.Ambient.AmbientEnum;
+import com.jw.dw.Ambient.CellMap;
 import com.jw.dw.Phases;
 import com.jw.dw.chars.EnemyCreator;
 import com.jw.dw.chars.Hero;
@@ -20,7 +22,7 @@ class TimerAllTasks {
     private CharAction act;
     private ArrayList enemyList;
     public Phases phase;
-    private String[][] field;
+    private CellMap[][] field;
     private boolean enemySpoted = false;
     private String tmpChar = AmbientEmpty.icon;
 
@@ -78,8 +80,6 @@ class TimerAllTasks {
 
                 CharAction act = CharAction.GetInstance();
                 act.StartBattle(hero, enemyList);
-
-
             }
         }
 
@@ -88,68 +88,34 @@ class TimerAllTasks {
             //Поиск пути
             AStar aStar = AStar.GetInstance();
 
-
-
-
-
-
-
-
-
             WorldField sf = WorldField.GetInstance();
             field = sf.GetField();
-
-
-
 
             if (!aStar.routeFound) {
                 aStar.Start();
             }
 
-
-
             //Анимация перемещения
-            /*while (!aStar.routeFound) {
-                field = sf.GetField();
-            }*/
-
-
-            /*if (aStar.routeFound) {
-
-                if (aStar.arX.size() != 0) {
-                    boolean done = false;
-                    for (int i = 0; i < sf.WIDTH; i++) {
-                        for (int j = 0; j < sf.HEIGHT; j++) {
-                            if (!done) {
-                                if (Objects.equals(field[i][j], Hero.icon)) {
-                                    field[i][j] = AmbientEmpty.icon;
-                                    field[aStar.arX.get(aStar.arX.size() - 1)][aStar.arY.get(aStar.arY.size() - 1)] = Hero.icon;
-                                    done = true;
-
-
-                                }
-                            }
-                        }
-
-                    }
-                    aStar.arX.remove(aStar.arX.size() - 1);
-                    aStar.arY.remove(aStar.arY.size() - 1);
-                }
-            }*/
 
             if (aStar.routeFound) {
 
                 if (aStar.arX.size() != 0) {
-                    field[hero.posX][hero.posY] = tmpChar;
-                    tmpChar = field[aStar.arX.get(aStar.arX.size() - 1)][aStar.arY.get(aStar.arY.size() - 1)];
+                    field[hero.posX][hero.posY].icon = tmpChar;
+                    tmpChar = field[aStar.arX.get(aStar.arX.size() - 1)][aStar.arY.get(aStar.arY.size() - 1)].icon;
 
 
 
                     hero.SetPosition(aStar.arX.get(aStar.arX.size() - 1),aStar.arY.get(aStar.arY.size() - 1));
-                    field[aStar.arX.get(aStar.arX.size() - 1)][aStar.arY.get(aStar.arY.size() - 1)] = Hero.icon;
-                    if(tmpChar == AmbientDoor.icon){
-                        act.Action();
+                    field[aStar.arX.get(aStar.arX.size() - 1)][aStar.arY.get(aStar.arY.size() - 1)].icon = Hero.icon;
+
+                    AmbientEnum cellKind = field[aStar.arX.get(aStar.arX.size() - 1)][aStar.arY.get(aStar.arY.size() - 1)].kind;
+
+                    //if(tmpChar == AmbientDoor.icon){
+                    if(cellKind == AmbientEnum.Door){
+                        hero.mooved = true;
+                        act.DoorMooving();
                     }
+
                     aStar.arX.remove(aStar.arX.size() - 1);
                     aStar.arY.remove(aStar.arY.size() - 1);
 

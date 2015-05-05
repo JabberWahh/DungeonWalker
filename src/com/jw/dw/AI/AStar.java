@@ -6,6 +6,7 @@ package com.jw.dw.AI;
  */
 
 import com.jw.dw.Ambient.AmbientWall;
+import com.jw.dw.Ambient.CellMap;
 import com.jw.dw.chars.Aim;
 import com.jw.dw.chars.Hero;
 import com.jw.dw.gui.WorldField;
@@ -50,7 +51,7 @@ public class AStar {
         // Создадим преграду
 
 
-        String[][] wF = wFObj.GetField();
+        CellMap[][] wF = wFObj.GetField();
 
         Hero hero = Hero.GetInstance();
         Aim aim = Aim.GetInstance();
@@ -58,7 +59,7 @@ public class AStar {
         for (int i = 0; i < wFObj.WIDTH; i++) {
             for (int j = 0; j < wFObj.HEIGHT; j++) {
                 //Это преграда
-                if (Objects.equals(wF[i][j], AmbientWall.icon)) {
+                if (wF[i][j].wall) {
                     blockList.add(new Cell(i, j, true));
                 }
             }
@@ -180,6 +181,7 @@ public class AStar {
         if (!noroute) {
             Cell rd = finish.parent;
             routeFound = true;
+
             while (!rd.equals(start)) {
                 arX.add(rd.x);
                 arY.add(rd.y);
@@ -187,6 +189,15 @@ public class AStar {
                 rd = rd.parent;
                 if (rd == null) break;
             }
+
+            for (int i = arX.size() - 1; i >0; i--) {
+                if(arX.get(i) == aim.posX && arY.get(i) == aim.posY){
+                    arX.remove(i);
+                    arY.remove(i);
+                }
+            }
+            arX.add(hero.posX);
+            arY.add(hero.posY);
 
             //cellList.printp();
             //return cellList;

@@ -8,9 +8,10 @@ public class Hero implements Characters {
     private Integer hp;
     private Integer dmg;
     public boolean needRest = false;
-    public static final String icon = "@";
+    public static final String icon = "☺";
     public Integer posX = 0;
     public Integer posY = 0;
+    public boolean mooved;
     private static Hero instance;
 
     private Hero(){}

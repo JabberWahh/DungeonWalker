@@ -1,10 +1,7 @@
 package com.jw.dw.gui;
 
 
-import com.jw.dw.Ambient.AmbientChest;
-import com.jw.dw.Ambient.AmbientDoor;
-import com.jw.dw.Ambient.AmbientEmpty;
-import com.jw.dw.Ambient.AmbientWall;
+import com.jw.dw.Ambient.*;
 import com.jw.dw.chars.Enemy;
 import com.jw.dw.chars.Hero;
 import javafx.scene.Group;
@@ -42,47 +39,47 @@ public class Rasterizer {
 
         WorldField sf = WorldField.GetInstance();
         //String[][] field = sf.SetField();
-        String[][] field = sf.GetField();
+        CellMap[][] field = sf.GetField();
 
         if (startDraw) {
             root.getChildren().clear();
             for (int i = 0; i < sf.WIDTH; i++) {
                 for (int j = 0; j < sf.HEIGHT; j++) {
+                    if (field[i][j].visible) {
+                        String ch = AmbientEmpty.icon;
+                        if (field[i][j] != null) {
+                            ch = field[i][j].icon;
+                        }
 
+                        Text text = new Text(x + (i * 15) + 15, y + (j * 17) + 17, ch);
+                        text.setFont(Font.font("Droid Sans Bold", 16));
 
-                    String ch = AmbientEmpty.icon;
-                    if (field[i][j] != null) {
-                        ch = field[i][j];
-                    }
+                        //Defaul color
+                        text.setFill(Color.rgb(0, 153, 51, 1));
+                        if (Objects.equals(ch, AmbientWall.icon)) {
+                            text.setFill(Color.rgb(107, 71, 36));
+                        }
+                        if (Objects.equals(ch, Hero.icon)) {
+                            text.setFill(Color.rgb(51, 173, 255));
+                        }
+                        if (Objects.equals(ch, Enemy.icon)) {
+                            text.setFill(Color.rgb(255, 71, 25));
+                        }
+                        if (Objects.equals(ch, AmbientDoor.icon)) {
+                            text.setFill(Color.rgb(194, 194, 214));
+                        }
+                        if (Objects.equals(ch, "A")) {
+                            text.setFill(Color.rgb(255, 51, 153));
+                        }
+                        if (Objects.equals(ch, AmbientChest.icon)) {
+                            text.setFill(Color.rgb(255, 255, 153));
+                        }
 
-                    Text text = new Text(x + (i * 15) + 15, y + (j * 17) + 17, ch);
-                    text.setFont(Font.font("Droid Sans Bold", 16));
+                        text.setRotate(0);
 
-                    //Defaul color
-                    text.setFill(Color.rgb(0, 153, 51, 1));
-                    if (Objects.equals(ch, AmbientWall.icon)) {
-                        text.setFill(Color.rgb(107, 71, 36));
-                    }
-                    if (Objects.equals(ch, Hero.icon)) {
-                        text.setFill(Color.rgb(51, 173, 255));
-                    }
-                    if (Objects.equals(ch, Enemy.icon)) {
-                        text.setFill(Color.rgb(255, 71, 25));
-                    }
-                    if (Objects.equals(ch, AmbientDoor.icon)) {
-                        text.setFill(Color.rgb(194, 194, 214));
-                    }
-                    if (Objects.equals(ch, "A")) {
-                        text.setFill(Color.rgb(255, 51, 153));
-                    }
-                    if (Objects.equals(ch, AmbientChest.icon)) {
-                        text.setFill(Color.rgb(255, 255, 153));
-                    }
+                        root.getChildren().add(text);
 
-                    text.setRotate(0);
-
-                    root.getChildren().add(text);
-
+                    }
                 }
             }
             startDraw = false;
