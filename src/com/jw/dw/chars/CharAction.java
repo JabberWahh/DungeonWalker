@@ -1,15 +1,11 @@
-import com.jw.dw.AI.AStar;
+package com.jw.dw.chars;
+
 import com.jw.dw.Ambient.ActionPoint;
 import com.jw.dw.Ambient.ActionSpot;
-import com.jw.dw.chars.Aim;
-import com.jw.dw.chars.Enemy;
-import com.jw.dw.chars.Hero;
 import com.jw.dw.gui.WorldField;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 /**
  * Created by vahma on 27.04.15.
@@ -18,7 +14,7 @@ import java.util.TimerTask;
 public class CharAction {
 
     private Hero hero;
-    private ArrayList<Enemy> enemy;
+    private Enemy enemy;
     public boolean battleStarted;
 
     private static CharAction instance;
@@ -33,7 +29,7 @@ public class CharAction {
         return instance;
     }
 
-    public void StartBattle(Hero h, ArrayList e) {
+    /*public void StartBattle(Hero h, Enemy e) {
 
         hero = h;
         enemy = e;
@@ -83,6 +79,28 @@ public class CharAction {
         }
 
 
+    }*/
+
+    public void Battle(Hero h, Enemy e) {
+
+
+        hero = h;
+        enemy = e;
+
+
+        int dmgToHero = enemy.GetDmg();
+        int dmgToEnemy = hero.GetDmg();
+
+        hero.SetHP(hero.GetHP() - dmgToHero);
+        enemy.SetHP(enemy.GetHP() - dmgToEnemy);
+        System.out.println("H -> " + dmgToEnemy + " dmg., " + hero.GetHP() + " hp left. E@" + enemy.icon + "@ ->" + dmgToHero + " dmg., " + enemy.GetHP());
+
+
+        if (hero.GetHP() <= 0 || enemy.GetHP() <= 0) {
+            battleStarted = false;
+        }
+
+
     }
 
     public void DoorMooving() {
@@ -101,7 +119,7 @@ public class CharAction {
                 apList = asList.get(i).actionPoints;
                 for (int j = 0; j < apList.size() && !actionFound; j++) {
                     ActionPoint ap = apList.get(j);
-                    System.out.println("ap " + ap.x + " " + ap.y);
+                    //System.out.println("ap " + ap.x + " " + ap.y);
                     if (ap.x == hero.posX && ap.y == hero.posY && !asList.get(i).activated) {
                         neededActionSpot = i;
                         asList.get(i).activated = true;
@@ -124,9 +142,11 @@ public class CharAction {
 
                 //
 
-                if (actionSpot.exit){
+                /*if (actionSpot.exit){
                     //Next lvl
-                }
+                    wf.lvl ++;
+                    wf.SetField();
+                }*/
                /* else{
                     Aim aim = Aim.GetInstance();
                     aim.posX = actionSpot.x;
@@ -138,9 +158,25 @@ public class CharAction {
 
                 //Deletig spot
                 asList.remove(neededActionSpot);
-
             }
         }
+    }
+
+    public void LightAround() {
+        Hero hero = Hero.GetInstance();
+        WorldField wf = WorldField.GetInstance();
+        for (int i = hero.posX - 1; i < hero.posX + 2; i++) {
+            for (int j = hero.posY - 1; j < hero.posY + 2; j++) {
+                wf.worldField[i][j].visible = true;
+            }
+        }
+    }
+
+    public static Enemy CreateEnemy() {
+
+        Enemy enemy = new Enemy(50, 3, 1);
+        return enemy;
+
     }
 
 }

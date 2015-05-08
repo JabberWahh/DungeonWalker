@@ -7,6 +7,7 @@ import com.jw.dw.chars.Hero;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 
 import java.util.Objects;
@@ -51,6 +52,7 @@ public class Rasterizer {
                             ch = field[i][j].icon;
                         }
 
+
                         Text text = new Text(x + (i * 15) + 15, y + (j * 17) + 17, ch);
                         text.setFont(Font.font("Droid Sans Bold", 16));
 
@@ -62,8 +64,12 @@ public class Rasterizer {
                         if (Objects.equals(ch, Hero.icon)) {
                             text.setFill(Color.rgb(51, 173, 255));
                         }
-                        if (Objects.equals(ch, Enemy.icon)) {
-                            text.setFill(Color.rgb(255, 71, 25));
+                        if (field[i][j].enemy != null) {
+                            if (field[i][j].enemy.GetHP() > 0) {
+                                text.setFill(Color.rgb(255, 71, 25));
+                            } else {
+                                text.setFill(Color.rgb(5, 5, 5));
+                            }
                         }
                         if (Objects.equals(ch, AmbientDoor.icon)) {
                             text.setFill(Color.rgb(194, 194, 214));
@@ -82,6 +88,41 @@ public class Rasterizer {
                     }
                 }
             }
+
+            //Name
+            Text text = new Text(800, 28, "Hero: " + Hero.GetInstance().heroName);
+            text.setFont(Font.font("IncisedBlack Normal", 12));
+            text.setFill(Color.rgb(255, 255, 153));
+            root.getChildren().add(text);
+
+            //Hero lvl
+            text = new Text(800, 48, "Lvl: " + Hero.GetInstance().lvl);
+            text.setFont(Font.font("Droid Sans Bold", 12));
+            text.setFill(Color.rgb(255, 255, 153));
+            root.getChildren().add(text);
+
+            //Hero HP
+            text = new Text(800, 68, "HP: ");
+            text.setFont(Font.font("Droid Sans Bold", 12));
+            text.setFill(Color.rgb(255, 255, 153));
+            root.getChildren().add(text);
+
+            String hp = "";
+            for (int i = 1; i < (Hero.GetInstance().GetHP() / 10) + 1; i++) {
+                hp = hp + "▓";
+            }
+
+            text = new Text(830, 68, hp);
+            text.setFont(Font.font("Droid Sans Bold", 12));
+            text.setFill(Color.rgb(255, 51, 51));
+            root.getChildren().add(text);
+
+            //Dungeon lvl
+            text = new Text(800, 88, "Dungeon level: " + sf.lvl);
+            text.setFont(Font.font("Droid Sans Bold", 12));
+            text.setFill(Color.rgb(255, 255, 153));
+            root.getChildren().add(text);
+
             startDraw = false;
         }
 

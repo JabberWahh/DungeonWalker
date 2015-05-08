@@ -55,6 +55,7 @@ public class AStar {
 
         Hero hero = Hero.GetInstance();
         Aim aim = Aim.GetInstance();
+        aim.SetAim();
 
         for (int i = 0; i < wFObj.WIDTH; i++) {
             for (int j = 0; j < wFObj.HEIGHT; j++) {

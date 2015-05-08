@@ -1,6 +1,6 @@
 
 import com.jw.dw.Phases;
-import com.jw.dw.chars.EnemyCreator;
+import com.jw.dw.chars.CharAction;
 import com.jw.dw.chars.Hero;
 
 import com.jw.dw.gui.Rasterizer;
@@ -9,9 +9,6 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-
-
-import java.util.ArrayList;
 
 
 import javax.swing.*;
@@ -86,14 +83,13 @@ public class Main extends Application {
         hero.SetHP(100);
         hero.SetDmg(5);
 
-        EnemyCreator ec = new EnemyCreator();
-        ArrayList enemyList = ec.GetEnemys();
+
 
 
         CharAction act = CharAction.GetInstance();
         //act.StartBattle(hero, enemyList);
 
-        TimerAllTasks task = new TimerAllTasks(hero, ec, act, enemyList);
+        TimerAllTasks task = new TimerAllTasks(hero, act);
 
         //Fighting phase
         //timer = new Timer(100, e -> task.run(timer));

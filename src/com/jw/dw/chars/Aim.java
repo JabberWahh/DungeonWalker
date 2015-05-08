@@ -14,7 +14,8 @@ public class Aim {
     public Integer posY = 0;
     private static Aim instance;
 
-    private Aim(){}
+    private Aim() {
+    }
 
     public static Aim GetInstance() {
         if (instance == null) {
@@ -23,22 +24,99 @@ public class Aim {
         return instance;
     }
 
-    public void SetPosition(int x, int y){
+    public void SetPosition(int x, int y) {
         posX = x;
         posY = y;
     }
 
-    public void SetAimToRandomDoor(){
+
+    public void SetAim() {
 
         WorldField wf = WorldField.GetInstance();
-        ArrayList<ActionSpot> asList = wf.actionSpots;
+        posX = 0;
+        posY = 0;
 
-        ActionSpot as2 = asList.get(randInt.GetRandInt(0, asList.size() - 1));
-        ArrayList apList2 = as2.actionPoints;
-        ActionPoint ap = (ActionPoint)apList2.get(randInt.GetRandInt(0, apList2.size() - 1));
+        //Firstly chek for actionSpots
+        for (int i = 0; i < wf.HEIGHT; i++) {
+            for (int j = 0; j < wf.WIDTH; j++) {
+                if (wf.worldField[i][j].kind == AmbientEnum.ActionSpot && wf.worldField[i][j].visible && !wf.worldField[i][j].activated) {
+                    posX = i;
+                    posY = j;
+                }
+            }
+        }
 
-        posX = ap.x;
-        posY = ap.y;
 
+        if (posX == 0) {//for chests
+            for (int i = 0; i < wf.HEIGHT; i++) {
+                for (int j = 0; j < wf.WIDTH; j++) {
+                    if (wf.worldField[i][j].kind == AmbientEnum.Chest && wf.worldField[i][j].visible && !wf.worldField[i][j].activated) {
+                        posX = i;
+                        posY = j;
+                    }
+                }
+            }
+        }
+
+        if (posX == 0) {
+            Hero hero = Hero.GetInstance();
+            int tXUp = hero.posX - 2;
+            int tXDowh = hero.posX + 2;
+            int tYUp = hero.posY - 2;
+            int tYDown = hero.posY + 2;
+
+            boolean doorFound = false;
+            while (!doorFound) {
+                tXUp--;
+                tXDowh++;
+                tYUp--;
+                tYDown++;
+                if (tXUp < 2) {
+                    tXUp = 2;
+                }
+                if (tYUp < 2) {
+                    tYUp = 2;
+                }
+                if (tXDowh > 48) {
+                    tXDowh = 48;
+                }
+                if (tYDown > 48) {
+                    tYDown = 48;
+                }
+
+                for (int i = tXUp; i < tXDowh; i++) {
+                    for (int j = tYUp; j < tYDown; j++) {
+                        if (wf.worldField[i][j].kind == AmbientEnum.Door && wf.worldField[i][j].visible && !wf.worldField[i][j].activated) {
+                            posX = i;
+                            posY = j;
+                            doorFound = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (posX == 0) {//for random doors
+            for (int i = 0; i < wf.HEIGHT; i++) {
+                for (int j = 0; j < wf.WIDTH; j++) {
+                    if (wf.worldField[i][j].kind == AmbientEnum.Door && wf.worldField[i][j].visible && !wf.worldField[i][j].activated) {
+                        posX = i;
+                        posY = j;
+                    }
+                }
+            }
+        }
+
+        /*if (posX == 0) {
+            ArrayList<ActionSpot> asList = wf.actionSpots;
+
+            ActionSpot as2 = asList.get(randInt.GetRandInt(0, asList.size() - 1));
+            ArrayList apList2 = as2.actionPoints;
+            ActionPoint ap = (ActionPoint) apList2.get(randInt.GetRandInt(0, apList2.size() - 1));
+
+            posX = ap.x;
+            posY = ap.y;
+
+        }*/
     }
 }

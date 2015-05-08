@@ -16,9 +16,9 @@ public class ActionSpot {
     public int lightYUp;
     public int lightYDown;
     public ArrayList<ActionPoint> actionPoints;
-    public boolean exit = false;
     public boolean activated = false;
     public String icon = "○";
+
 
     public ActionSpot(int xUp, int xDown, int yUp, int yDown) {
         actionPoints = new ArrayList<>();
@@ -55,8 +55,9 @@ public class ActionSpot {
         //Adding exit spot
 
         ActionSpot as = asList.get(randInt.GetRandInt(0, asList.size() - 1));
-        as.exit = true;
+        //as.exit = true;
         wf.worldField[as.x][as.y].icon = "☼";
+        wf.worldField[as.x][as.y].exit = true;
 
     }
 
