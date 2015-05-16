@@ -2,7 +2,7 @@ package com.jw.dw;
 
 import java.util.Random;
 
-/**
+/**randInt
  * Created by vahma on 03.05.15.
  */
 public class randInt {

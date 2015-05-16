@@ -2,12 +2,12 @@ package com.jw.dw.gui;
 
 import com.jw.dw.Ambient.*;
 import com.jw.dw.chars.Aim;
-import com.jw.dw.chars.CharAction;
 import com.jw.dw.chars.Enemy;
 import com.jw.dw.chars.Hero;
 import com.jw.dw.randInt;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by vahma on 30.04.15.
@@ -63,7 +63,7 @@ public class WorldField {
 
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < WIDTH; j++) {
-                worldField[i][j] = new CellMap(i, j, true, AmbientWall.icon, AmbientEnum.Wall);
+                worldField[i][j] = new CellMap(AmbientWall.icon, AmbientEnum.Wall);
             }
         }
 
@@ -86,7 +86,7 @@ public class WorldField {
 
         Aim aim = Aim.GetInstance();
         ActionSpot.RemoveUnnecessaryPoints();
-        aim.SetAim();
+        aim.SetAim(false);
 
 
     }
@@ -94,22 +94,17 @@ public class WorldField {
 
     /**
      * Создаём начальную комнату входа
-     *
      */
     private void CreateInitialRoom() {
 
-        Hero hero = Hero.GetInstance();
-        int x = 0;
-        int y = 0;
-        //x = hero.posX;
-        //y = hero.posY;
+        Hero hero = Hero.getInstance();
+        int x;
+        int y;
 
-        if (x == 0) {
-            x = ((int) (Math.random() * (WIDTH - 7))) + 3;
-            y = ((int) (Math.random() * (HEIGHT - 7))) + 3;
-            hero.SetPosition(x, y);
-            worldField[x][y].icon = Hero.icon;
-        }
+        x = ((int) (Math.random() * (WIDTH - 7))) + 3;
+        y = ((int) (Math.random() * (HEIGHT - 7))) + 3;
+        hero.SetPosition(x, y);
+        worldField[x][y].icon = Hero.icon;
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 worldField[x + i][y + j].icon = AmbientEmpty.icon;
@@ -129,6 +124,7 @@ public class WorldField {
             worldField[0][i].visible = true;
             worldField[WIDTH - 1][i].visible = true;
         }
+
 
         //actionSpots.add(new ActionSpot(x, x, y, y));
 
@@ -278,10 +274,10 @@ public class WorldField {
 
                 for (int i = xUp - 1; i < xDown + 2; i++) {
                     for (int j = yUp - 1; j < yDown + 2; j++) {
-                        if (!worldField[i][j].wall && worldField[i][j].icon != AmbientDoor.icon) {
+                        if (!worldField[i][j].wall && !Objects.equals(worldField[i][j].icon, AmbientDoor.icon)) {
                             success = false;
                         } else {
-                            if (worldField[i][j].icon == AmbientDoor.icon) {
+                            if (Objects.equals(worldField[i][j].icon, AmbientDoor.icon)) {
                                 numOfDoors = numOfDoors + 1;
                             }
                         }
@@ -365,7 +361,7 @@ public class WorldField {
                 curAs = actionSpots.get(actionSpots.size() - 1);
                 for (int i = xUp - 1; i < xDown + 2; i++) {
                     for (int j = yUp - 1; j < yDown + 2; j++) {
-                        if (worldField[i][j].icon == AmbientDoor.icon) {
+                        if (Objects.equals(worldField[i][j].icon, AmbientDoor.icon)) {
                             curAs.AddActionPoint(i, j);
                         }
                     }
@@ -385,7 +381,7 @@ public class WorldField {
     private void ConvertDoor() {
         for (int i = 1; i < HEIGHT - 1; i++) {
             for (int j = 1; j < WIDTH - 1; j++) {
-                if (worldField[i][j].icon == AmbientDoor.icon) {
+                if (Objects.equals(worldField[i][j].icon, AmbientDoor.icon)) {
                     boolean itsDoor = false;
                     if ((!worldField[i - 1][j].wall && !worldField[i + 1][j].wall) || (!worldField[i][j - 1].wall && !worldField[i][j + 1].wall)) {
                         itsDoor = true;
@@ -404,6 +400,11 @@ public class WorldField {
 
             }
         }
+
+        //!!!!!!!
+        /*worldField[Hero.getInstance().posX+2][Hero.getInstance().posY-2].icon = AmbientChest.icon;
+        worldField[Hero.getInstance().posX+2][Hero.getInstance().posY-2].kind = AmbientEnum.Chest;
+        worldField[Hero.getInstance().posX+2][Hero.getInstance().posY-2].wall = false;*/
     }
 }
 

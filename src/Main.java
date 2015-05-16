@@ -4,10 +4,13 @@ import com.jw.dw.chars.CharAction;
 import com.jw.dw.chars.Hero;
 
 import com.jw.dw.gui.Rasterizer;
+import com.jw.dw.gui.ShowingStage;
 import com.jw.dw.gui.WorldField;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.image.Image;
+import javafx.scene.input.*;
 import javafx.stage.Stage;
 
 
@@ -42,13 +45,26 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
-        primaryStage.setTitle("Dungeon Walker");
+        primaryStage.setTitle("Dungeon Walker ver 0.03");
         root = new Group();
         rastr = new Rasterizer();
         //
 
-        Scene sC = new Scene(root, 1200, 880, Color.rgb(34, 34, 34, 1));
+        Scene sC = new Scene(root, 1300, 880, Color.rgb(34, 34, 34, 1));
+
+
+        sC.setOnKeyPressed(ke -> {
+            if (ke.getCode() == KeyCode.I) {
+                if (rastr.showingStage == ShowingStage.INVENTORY) {
+                    rastr.showingStage = ShowingStage.MAP;
+                } else {
+                    rastr.showingStage = ShowingStage.INVENTORY;
+                }
+            }
+            if (ke.getCode() == KeyCode.M) {
+                rastr.showingStage = ShowingStage.MAP;
+            }
+        });
 
         //Start render
         Timer timerRendr = new Timer(1000, e -> rastr.startDraw = true);
@@ -57,11 +73,16 @@ public class Main extends Application {
         at.start();
         //
 
+        //primaryStage.getIcons().add(new Image("resources/ADOMIcon2.png"));
+
+        //primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("ADOMIcon2.png")));
+        Image applicationIcon = new Image(getClass().getResourceAsStream("ADOMIcon2.png"));
+        primaryStage.getIcons().add(applicationIcon);
+        
+
 
         primaryStage.setScene(sC);
         primaryStage.show();
-
-
         timerRendr.start();
 
         primaryStage.setOnCloseRequest(t -> {
@@ -72,21 +93,17 @@ public class Main extends Application {
 
     }
 
+
     ///////////////////////////////
 
     public static void main(String[] args) {
-
-
         System.out.println("Started...");
 
-        Hero hero =  Hero.GetInstance();
-        hero.SetHP(100);
-        hero.SetDmg(5);
+        Hero hero = Hero.getInstance();
+        //hero.SetHP(100);
+        //hero.SetDmg(5);
 
-
-
-
-        CharAction act = CharAction.GetInstance();
+        CharAction act = CharAction.getInstance();
         //act.StartBattle(hero, enemyList);
 
         TimerAllTasks task = new TimerAllTasks(hero, act);
@@ -98,13 +115,13 @@ public class Main extends Application {
         //
 
         //Mooving phase
-        timer = new Timer(1000, e -> task.run(timer));
+        timer = new Timer(1000, e -> task.run());
         task.phase = Phases.MOOVING;
         timer.start();
         //
 
         launch(args);
 
-
     }
+
 }

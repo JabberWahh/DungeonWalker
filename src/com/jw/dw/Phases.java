@@ -5,6 +5,6 @@ package com.jw.dw;
  * Phases of life
  */
 public enum Phases {
-    FIGHT, MOOVING, RESURECTION, HEALING
+    FIGHT, MOOVING, RESURECTION
 
 }

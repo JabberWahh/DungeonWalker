@@ -1,5 +1,7 @@
 package com.jw.dw.chars;
 
+import com.jw.dw.Items.Flask;
+import com.jw.dw.Items.FlaskKind;
 import com.jw.dw.randInt;
 
 /**
@@ -9,39 +11,114 @@ import com.jw.dw.randInt;
 public class Enemy implements Characters {
 
     private Integer hp;
+    public Integer hpmax;
     private Integer dmg;
     public Integer level = 0;
     public String icon = "g";
     public Integer posX = 0;
     public Integer posY = 0;
+    public String enemyName = "";
+    public int xp = 0;
+    public boolean elite = false;
 
-    public Enemy(Integer hpset, Integer dmgset, Integer lvl ) {
+    /*public Enemy(Integer hpset, Integer dmgset, Integer lvl) {
         hp = hpset;
         dmg = dmgset;
         level = lvl;
 
-    }
+    }*/
 
-    public Enemy(Integer lvl ) {
-        hp = 50 *(1+(lvl / 10));
-        dmg = 3 *(1+(lvl / 10));;
-        level = lvl;
+    public Enemy(Integer dungeonlvl) {
 
-        int rnd = randInt.GetRandInt(1,2);
-        if(rnd==1){
+        double hpMult = 1;
+        double dmgEnemy = 1;
+
+        int rnd = randInt.GetRandInt(1, 1000);
+
+        if (rnd < 400) {
             icon = "s";
+            enemyName = "spider";
+            dmgEnemy = 2;
+        } else if (rnd < 500) {
+            icon = "g";
+            enemyName = "Goblin";
+            hpMult = 1.1;
+            dmgEnemy = 2.5;
+        } else if (rnd < 550) {
+            icon = "z";
+            enemyName = "Zombie";
+            hpMult = 1.2;
+            dmgEnemy = 3;
+        } else if (rnd < 600) {
+            icon = "h";
+            enemyName = "Hobgoblin";
+            hpMult = 1.3;
+            dmgEnemy = 4;
+        } else if (rnd < 650) {
+            icon = "k";
+            enemyName = "Kobold";
+            hpMult = 1.6;
+            dmgEnemy = 5;
+        } else if (rnd < 750) {
+            icon = "b";
+            enemyName = "Beholder";
+            hpMult = 1.8;
+            dmgEnemy = 7;
+        } else if (rnd < 800) {
+            icon = "W";
+            enemyName = "Wyvern";
+            hpMult = 2;
+            dmgEnemy = 9;
+            elite = true;
+        } else if (rnd < 850) {
+            icon = "E";
+            enemyName = "Elemental";
+            hpMult = 2.3;
+            dmgEnemy = 10;
+            elite = true;
+        } else if (rnd < 900) {
+            icon = "M";
+            enemyName = "Manticora";
+            hpMult = 2.5;
+            dmgEnemy = 12;
+            elite = true;
+        } else if (rnd >= 900) {
+            icon = "D";
+            enemyName = "Dragon";
+            hpMult = 3;
+            dmgEnemy = 14;
+            elite = true;
         }
+        hp = (int) ((80 * hpMult) + ((dungeonlvl - 1) * 40));
+        hpmax = hp;
+        dmg = (int) ((dungeonlvl - 1) + dmgEnemy);
+        level = dungeonlvl;
+        xp = (hp / 20);
+
 
     }
 
-    public void SetHP(Integer shp) {
+    public void setHP(Integer shp) {
         hp = shp;
     }
 
 
-    public Integer GetDmg() {
+    public Integer getDmg() {
 
-        return dmg + (int) (Math.random() * 3 + 1);
+        double armour = 0;
+        double dmgTmp;
+        for (int i = 0; i < Hero.getInstance().armour.size(); i++) {
+            armour = armour + Hero.getInstance().armour.get(i).getArmour();
+        }
+        if (Flask.isActivatedFlaskByKind(FlaskKind.Armor)) {
+            armour = armour * 4;
+        }
+        dmgTmp = randInt.GetRandInt((int) (dmg * 0.6), (int) (dmg * 1.4));
+        dmgTmp = dmgTmp - armour;
+        if (dmgTmp <= 0) {
+            dmgTmp = 1;
+        }
+        return (int) dmgTmp;
     }
 
 
@@ -50,7 +127,7 @@ public class Enemy implements Characters {
         dmg = sdmg;
     }
 
-    public Integer GetHP() {
+    public Integer getHP() {
 
         return hp;
     }

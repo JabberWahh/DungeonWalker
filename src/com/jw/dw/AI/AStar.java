@@ -5,7 +5,6 @@ package com.jw.dw.AI;
  * AStar
  */
 
-import com.jw.dw.Ambient.AmbientWall;
 import com.jw.dw.Ambient.CellMap;
 import com.jw.dw.chars.Aim;
 import com.jw.dw.chars.Hero;
@@ -13,11 +12,9 @@ import com.jw.dw.gui.WorldField;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Objects;
 
 public class AStar {
 
-    private Cell start;
     private Cell finish;
     public ArrayList<Integer> arX;
     public ArrayList<Integer> arY;
@@ -53,14 +50,14 @@ public class AStar {
 
         CellMap[][] wF = wFObj.GetField();
 
-        Hero hero = Hero.GetInstance();
+        Hero hero = Hero.getInstance();
         Aim aim = Aim.GetInstance();
-        aim.SetAim();
+        //aim.SetAim();
 
         for (int i = 0; i < wFObj.WIDTH; i++) {
             for (int j = 0; j < wFObj.HEIGHT; j++) {
                 //Это преграда
-                if (wF[i][j].wall) {
+                if (wF[i][j].wall || !wF[i][j].visible) {
                     blockList.add(new Cell(i, j, true));
                 }
             }
@@ -78,7 +75,7 @@ public class AStar {
 
 
         cellList.get(hero.posX, hero.posY).setAsStart();
-        start = cellList.get(hero.posX, hero.posY);
+        Cell start = cellList.get(hero.posX, hero.posY);
 
         for (int i = 0; i < wFObj.WIDTH; i++) {
             for (int j = 0; j < wFObj.HEIGHT; j++) {

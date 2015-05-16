@@ -1,12 +1,10 @@
 package com.jw.dw.chars;
 
+import com.jw.dw.AI.AStar;
 import com.jw.dw.Ambient.*;
 import com.jw.dw.gui.WorldField;
-import com.jw.dw.randInt;
 
-import java.util.ArrayList;
-
-/**
+/**Aim
  * Created by vahma on 04.05.15.
  */
 public class Aim {
@@ -30,7 +28,7 @@ public class Aim {
     }
 
 
-    public void SetAim() {
+    public void SetAim(boolean toDoor) {
 
         WorldField wf = WorldField.GetInstance();
         posX = 0;
@@ -46,29 +44,34 @@ public class Aim {
             }
         }
 
-
-        if (posX == 0) {//for chests
-            for (int i = 0; i < wf.HEIGHT; i++) {
-                for (int j = 0; j < wf.WIDTH; j++) {
+        boolean doorChosen = false;
+        if (posX == 0 &&!toDoor) {//for chests
+            for (int i = 1; i < wf.HEIGHT &&!doorChosen; i++) {
+                for (int j = 1; j < wf.WIDTH&&!doorChosen; j++) {
                     if (wf.worldField[i][j].kind == AmbientEnum.Chest && wf.worldField[i][j].visible && !wf.worldField[i][j].activated) {
                         posX = i;
                         posY = j;
+                        AStar aStar = AStar.GetInstance();
+                        aStar.Start();
+                        if(aStar.routeFound){
+                            doorChosen = true;
+                        }
                     }
                 }
             }
         }
 
         if (posX == 0) {
-            Hero hero = Hero.GetInstance();
+            Hero hero = Hero.getInstance();
             int tXUp = hero.posX - 2;
-            int tXDowh = hero.posX + 2;
+            int tXDown = hero.posX + 2;
             int tYUp = hero.posY - 2;
             int tYDown = hero.posY + 2;
 
             boolean doorFound = false;
             while (!doorFound) {
                 tXUp--;
-                tXDowh++;
+                tXDown++;
                 tYUp--;
                 tYDown++;
                 if (tXUp < 2) {
@@ -77,14 +80,14 @@ public class Aim {
                 if (tYUp < 2) {
                     tYUp = 2;
                 }
-                if (tXDowh > 48) {
-                    tXDowh = 48;
+                if (tXDown > 48) {
+                    tXDown = 48;
                 }
                 if (tYDown > 48) {
                     tYDown = 48;
                 }
 
-                for (int i = tXUp; i < tXDowh; i++) {
+                for (int i = tXUp; i < tXDown; i++) {
                     for (int j = tYUp; j < tYDown; j++) {
                         if (wf.worldField[i][j].kind == AmbientEnum.Door && wf.worldField[i][j].visible && !wf.worldField[i][j].activated) {
                             posX = i;

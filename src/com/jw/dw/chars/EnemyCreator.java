@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by vahma on 27.04.15.
  * Creates enemies
  */
-public class EnemyCreator {
+class EnemyCreator {
 
 
     public EnemyCreator() {
@@ -27,7 +27,7 @@ public class EnemyCreator {
         ArrayList<Enemy> enemyBand = new ArrayList<>();
         for (int i = 1; i <= count; i++) {
 
-            enemyBand.add(new Enemy(50, 3, (int) (Math.random() * 100 + 1)));
+           // enemyBand.add(new Enemy(50, 3, (int) (Math.random() * 100 + 1)));
         }
 
         //System.out.println("Created " + count + " enemys");

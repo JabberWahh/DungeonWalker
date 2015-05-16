@@ -1,6 +1,10 @@
 package com.jw.dw.chars;
 
+import com.jw.dw.Items.*;
 import com.jw.dw.randInt;
+import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
 
 /**
  * Created by vahma on 27.04.15.
@@ -9,7 +13,7 @@ import com.jw.dw.randInt;
 public class Hero implements Characters {
     private Integer hp;
     private Integer dmg;
-    public boolean needRest = false;
+    //public boolean needRest = false;
     public static final String icon = "☺";
     public Integer posX = 0;
     public Integer posY = 0;
@@ -17,35 +21,96 @@ public class Hero implements Characters {
     private static Hero instance;
     public String heroName;
     public int lvl = 1;
+    public int timeToResurect = 100;
+    public long xp = 0;
+    public int deathCount = 0;
+    public int monstersKilled = 0;
+    public Enemy strongestEnemy;
+    public Weapon weapon;
+    public ArrayList<Armour> armour;
+    public ArrayList<Flask> flasks;
+
 
     private Hero() {
         this.heroName = GetHeroName();
+        SetDmg();
+        setHP();
+        armour = new ArrayList<>();
+        flasks = new ArrayList<>();
+
+        //////
+        /*flasks.add(new Flask(FlaskKind.HealTime));
+        flasks.add(new Flask(FlaskKind.HealPermanent));
+        flasks.add(new Flask(FlaskKind.Armor));
+        flasks.add(new Flask(FlaskKind.Damage));
+        flasks.add(new Flask(FlaskKind.PlusHP));*/
     }
 
-    public static Hero GetInstance() {
+    public static Hero getInstance() {
         if (instance == null) {
-            ;
             instance = new Hero();
         }
         return instance;
     }
 
-    public void SetHP(Integer shp) {
+    public void setHP(Integer shp) {
+
         hp = shp;
     }
 
+    public void setHP() {
 
-    public Integer GetDmg() {
+        hp = (int) (100 * ((lvl * 0.1) + 0.9));
+    }
 
-        return dmg + (int) (Math.random() * 3 + 1);
+    public void addHP(int pl) {
+
+        if (hp + pl <= getMAXHP()) {
+            hp = hp + pl;
+        } else {
+            hp = getMAXHP();
+        }
+
+    }
+
+    public int getMAXHP() {
+
+        return (int) (100 * ((lvl * 0.1) + 0.9));
     }
 
 
-    public void SetDmg(Integer sdmg) {
-        dmg = sdmg;
+    public Integer getDmg() {
+
+        if (weapon != null) {
+            return randInt.GetRandInt((int) (weapon.getStansartDmg() * 0.6), (int) (weapon.getStansartDmg() * 1.4));
+        }
+        return randInt.GetRandInt((int) (dmg * 0.6), (int) (dmg * 1.4));
     }
 
-    public Integer GetHP() {
+    public double getStandartDmg() {
+
+        if (weapon != null) {
+            return weapon.getStansartDmg();
+        }
+        return dmg;
+    }
+
+    public double getStandartArmour() {
+
+        double armour = 0;
+        for (int i = 0; i < Hero.getInstance().armour.size(); i++) {
+            armour = armour + Hero.getInstance().armour.get(i).getStansartArmour();
+        }
+        return armour;
+    }
+
+
+    public void SetDmg() {
+        //dmg = (int) (5 * ((lvl * 0.1) + 0.1));
+        dmg = 2 + lvl - 1;
+    }
+
+    public Integer getHP() {
 
         return hp;
     }
@@ -55,7 +120,27 @@ public class Hero implements Characters {
         posY = y;
     }
 
-    public static String GetHeroName() {
+    public String getArmourByKind(ArmourPart ap) {
+
+        for (Armour anArmour : armour) {
+            if (anArmour.armourPart == ap) {
+                return anArmour.armourName + " lvl." + anArmour.lvl;
+            }
+        }
+        return "";
+    }
+
+    public Color getArmourColorByKind(ArmourPart ap) {
+
+        for (Armour anArmour : armour) {
+            if (anArmour.armourPart == ap) {
+                return anArmour.color;
+            }
+        }
+        return Color.rgb(0, 0, 0);
+    }
+
+    private static String GetHeroName() {
 
         String allNames = "Abban Adomn Adhamh Adhamhnán Adamnan Eunan Adanodan Ailbhe Ailbe Alby " +
                 "Ailgel Ailill Ailín Aininn Ainmire Airechtach Airmedach Alabhaois Alaios " +

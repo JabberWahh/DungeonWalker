@@ -52,7 +52,7 @@ class Table<T extends Cell> {
      */
     /*public void printp() {
 
-        WorldField wFObj = WorldField.GetInstance();
+        WorldField wFObj = WorldField.getInstance();
         for (int i = 0; i < wFObj.WIDTH; i++) {
             for (int j = 0; j < wFObj.HEIGHT; j++) {
                 System.out.print(this.get(j, i));

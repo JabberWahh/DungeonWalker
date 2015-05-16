@@ -11,7 +11,7 @@ public class HealingAction {
     private Hero hero;
     private static HealingAction instance;
 
-    public boolean healing;
+    private boolean healing;
 
     private HealingAction() {
 
@@ -34,15 +34,15 @@ public class HealingAction {
         TimerTask task = new TimerTask() {
             public void run() {
 
-                hero.SetHP(hero.GetHP() + 10);
-                if (hero.GetHP() > 100) {
-                    hero.SetHP(100);
+                hero.setHP(hero.getHP() + 10);
+                if (hero.getHP() > (int) (100 * ((hero.lvl * 0.2) + 0.8))) {
+                    hero.setHP();
                 }
 
-                System.out.println("H ++ " + hero.GetHP());
+                System.out.println("H ++ " + hero.getHP());
 
-                if (hero.GetHP() == 100) {
-                    hero.needRest = false;
+                if (hero.getHP() == 100) {
+                    //hero.needRest = false;
                     healing = false;
                     try {
                         timer2.cancel();

@@ -6,12 +6,11 @@ package com.jw.dw.chars;
  */
 interface Characters {
 
-    void SetHP(Integer shp);
+    void setHP(Integer shp);
 
-    Integer GetDmg();
+    Integer getDmg();
 
-    void SetDmg(Integer sdmg);
 
-    Integer GetHP();
+    Integer getHP();
 
 }

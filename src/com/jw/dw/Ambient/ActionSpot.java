@@ -5,7 +5,7 @@ import com.jw.dw.randInt;
 
 import java.util.ArrayList;
 
-/**
+/**Action spot
  * Created by vahma on 03.05.15.
  */
 public class ActionSpot {
@@ -58,13 +58,9 @@ public class ActionSpot {
         //as.exit = true;
         wf.worldField[as.x][as.y].icon = "☼";
         wf.worldField[as.x][as.y].exit = true;
+        wf.worldField[as.x][as.y].enemy = null;
 
     }
 
-    public static ActionSpot FindWithCoords(ActionSpot as,int xCoord,int yCoords){
-
-
-        return null;
-    }
 
 }
