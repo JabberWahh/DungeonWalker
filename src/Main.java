@@ -3,7 +3,7 @@ import com.jw.dw.Phases;
 import com.jw.dw.chars.CharAction;
 import com.jw.dw.chars.Hero;
 
-import com.jw.dw.gui.Rasterizer;
+
 import com.jw.dw.gui.ShowingStage;
 import com.jw.dw.gui.WorldField;
 import javafx.animation.AnimationTimer;
@@ -31,7 +31,8 @@ public class Main extends Application {
 
     private static Timer timer;
     private static Group root;
-    private static Rasterizer rastr;
+    private static Rasterizer2 rastr;
+
 
     //gui initialization
 
@@ -45,9 +46,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Dungeon Walker ver 0.03");
+        primaryStage.setTitle("Dungeon Walker ver 0.04");
         root = new Group();
-        rastr = new Rasterizer();
+        rastr = new Rasterizer2();
         //
 
         Scene sC = new Scene(root, 1300, 880, Color.rgb(34, 34, 34, 1));
@@ -69,16 +70,15 @@ public class Main extends Application {
         //Start render
         Timer timerRendr = new Timer(1000, e -> rastr.startDraw = true);
 
+
+
         WorldField sf = WorldField.GetInstance();
         at.start();
         //
 
-        //primaryStage.getIcons().add(new Image("resources/ADOMIcon2.png"));
-
-        //primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("ADOMIcon2.png")));
         Image applicationIcon = new Image(getClass().getResourceAsStream("ADOMIcon2.png"));
         primaryStage.getIcons().add(applicationIcon);
-        
+
 
 
         primaryStage.setScene(sC);

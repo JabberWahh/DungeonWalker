@@ -50,8 +50,8 @@ public class Enemy implements Characters {
             hpMult = 1.2;
             dmgEnemy = 3;
         } else if (rnd < 600) {
-            icon = "h";
-            enemyName = "Hobgoblin";
+            icon = "d";
+            enemyName = "Demon";
             hpMult = 1.3;
             dmgEnemy = 4;
         } else if (rnd < 650) {
@@ -93,7 +93,7 @@ public class Enemy implements Characters {
         hpmax = hp;
         dmg = (int) ((dungeonlvl - 1) + dmgEnemy);
         level = dungeonlvl;
-        xp = (hp / 20);
+        xp = (hp / 40);
 
 
     }

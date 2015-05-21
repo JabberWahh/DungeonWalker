@@ -67,6 +67,7 @@ class TimerAllTasks {
                     if (hero.flasks.get(i).flaskKind == FlaskKind.HealTime) {
                         hero.flasks.get(i).activated = true;
                         hero.flasks.get(i).value = hero.getMAXHP() * 2;
+                        break;
                     }
                 }
             }

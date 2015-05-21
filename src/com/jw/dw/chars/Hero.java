@@ -39,11 +39,11 @@ public class Hero implements Characters {
         flasks = new ArrayList<>();
 
         //////
-        /*flasks.add(new Flask(FlaskKind.HealTime));
+        flasks.add(new Flask(FlaskKind.HealTime));
         flasks.add(new Flask(FlaskKind.HealPermanent));
         flasks.add(new Flask(FlaskKind.Armor));
         flasks.add(new Flask(FlaskKind.Damage));
-        flasks.add(new Flask(FlaskKind.PlusHP));*/
+        flasks.add(new Flask(FlaskKind.PlusHP));
     }
 
     public static Hero getInstance() {
