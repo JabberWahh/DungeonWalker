@@ -49,29 +49,28 @@ public class Rasterizer2 {
             root.getChildren().clear();
             boolean fighting = false;
 
-            Image imgEmpty = new Image(getClass().getClassLoader().getResourceAsStream("empty.gif"));
+            Image imgEmpty = new Image(getClass().getClassLoader().getResourceAsStream("floor.png"));
             Image imgWall = new Image(getClass().getClassLoader().getResourceAsStream("wall.png"));
             Image imgDoor = new Image(getClass().getClassLoader().getResourceAsStream("door.png"));
-            Image imgDoorCracked = new Image(getClass().getClassLoader().getResourceAsStream("door-cracked.gif"));
-            Image imgHero = new Image(getClass().getClassLoader().getResourceAsStream("hero.gif"));
-            Image imgHeroFight = new Image(getClass().getClassLoader().getResourceAsStream("hero-fight.gif"));
-            Image imgChest = new Image(getClass().getClassLoader().getResourceAsStream("chest.gif"));
-            Image imgExit = new Image(getClass().getClassLoader().getResourceAsStream("exit.gif"));
+            Image imgDoorCracked = new Image(getClass().getClassLoader().getResourceAsStream("open-door.png"));
+            Image imgHero = new Image(getClass().getClassLoader().getResourceAsStream("hero.png"));
+            Image imgHeroFight = new Image(getClass().getClassLoader().getResourceAsStream("hero-fight.png"));
+            Image imgChest = new Image(getClass().getClassLoader().getResourceAsStream("chest.png"));
+            Image imgExit = new Image(getClass().getClassLoader().getResourceAsStream("dngn_enter.png"));
 
-            Image imgEnemy = new Image(getClass().getClassLoader().getResourceAsStream("enemy.gif"));
-            Image imgEnemySpider = new Image(getClass().getClassLoader().getResourceAsStream("spider.gif"));
-            Image imgEnemyGoblin = new Image(getClass().getClassLoader().getResourceAsStream("goblin.gif"));
-            Image imgEnemyZombie = new Image(getClass().getClassLoader().getResourceAsStream("zombie.gif"));
-            Image imgEnemyDemon = new Image(getClass().getClassLoader().getResourceAsStream("demon.gif"));
-            Image imgEnemyKobold = new Image(getClass().getClassLoader().getResourceAsStream("kobold.gif"));
-            Image imgEnemyBeholder = new Image(getClass().getClassLoader().getResourceAsStream("beholder.gif"));
-            Image imgEnemyWywern = new Image(getClass().getClassLoader().getResourceAsStream("wywern.gif"));
-            Image imgEnemyElemental = new Image(getClass().getClassLoader().getResourceAsStream("elemental.gif"));
-            Image imgEnemyManticora = new Image(getClass().getClassLoader().getResourceAsStream("manticora.gif"));
-            Image imgEnemyDragon = new Image(getClass().getClassLoader().getResourceAsStream("dragon.gif"));
+            Image imgEnemy = new Image(getClass().getClassLoader().getResourceAsStream("enemy.png"));
+            Image imgEnemySpider = new Image(getClass().getClassLoader().getResourceAsStream("spider.png"));
+            Image imgEnemyGoblin = new Image(getClass().getClassLoader().getResourceAsStream("goblin.png"));
+            Image imgEnemyOrc = new Image(getClass().getClassLoader().getResourceAsStream("orc.png"));
+            Image imgEnemyDemon = new Image(getClass().getClassLoader().getResourceAsStream("demon.png"));
+            Image imgEnemyKobold = new Image(getClass().getClassLoader().getResourceAsStream("kobold.png"));
+            Image imgEnemyBeholder = new Image(getClass().getClassLoader().getResourceAsStream("beholder.png"));
+            Image imgEnemyWywern = new Image(getClass().getClassLoader().getResourceAsStream("wyvern.png"));
+            Image imgEnemyElemental = new Image(getClass().getClassLoader().getResourceAsStream("elemental.png"));
+            Image imgEnemyManticora = new Image(getClass().getClassLoader().getResourceAsStream("manticore.png"));
+            Image imgEnemyDragon = new Image(getClass().getClassLoader().getResourceAsStream("dragon.png"));
 
-            Image imgBlood = new Image(getClass().getClassLoader().getResourceAsStream("blood.gif"));
-
+            Image imgBlood = new Image(getClass().getClassLoader().getResourceAsStream("blood.png"));
 
             if (showingStage == ShowingStage.MAP) {
                 for (int i = 0; i < sf.WIDTH; i++) {
@@ -117,8 +116,8 @@ public class Rasterizer2 {
                                         img.setImage(imgEnemyGoblin);
                                         tmpView.setImage(imgEnemyGoblin);
                                     } else if (field[i][j].enemy.icon == "z") {
-                                        img.setImage(imgEnemyZombie);
-                                        tmpView.setImage(imgEnemyZombie);
+                                        img.setImage(imgEnemyOrc);
+                                        tmpView.setImage(imgEnemyOrc);
                                     } else if (field[i][j].enemy.icon == "d") {
                                         img.setImage(imgEnemyDemon);
                                         tmpView.setImage(imgEnemyDemon);
