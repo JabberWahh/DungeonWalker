@@ -21,7 +21,7 @@ public class WorldField {
     public CellMap[][] worldField;
     public final int WIDTH = 50;
     public final int HEIGHT = 50;
-    private boolean seted;
+    private boolean set;
     public int lvl = 1;
     //private int emptimess = 0;
     private ArrayList<Integer> doorPositionX;
@@ -34,7 +34,7 @@ public class WorldField {
     }
 
     public CellMap[][] GetField() {
-        if (!seted) {
+        if (!set) {
             SetField();
         }
         return worldField;
@@ -44,7 +44,7 @@ public class WorldField {
         if (instance == null) {
             instance = new WorldField();
             instance.SetField();
-            instance.seted = true;
+            instance.set = true;
         }
         return instance;
     }
@@ -67,7 +67,7 @@ public class WorldField {
             }
         }
 
-        seted = true;
+        set = true;
 
         //Комната инициализации
         CreateInitialRoom();
@@ -118,13 +118,13 @@ public class WorldField {
             }
         }
 
-        for (int i = 0; i < WIDTH; i++) {
-            worldField[i][0].visible = true;
-            worldField[i][HEIGHT - 1].visible = true;
-            worldField[0][i].visible = true;
-            worldField[WIDTH - 1][i].visible = true;
-        }
-
+        //Внешняя обводка стен вокруг карты. Иногда выдавала артефакты освещения.
+//        for (int i = 0; i < WIDTH; i++) {
+//            worldField[i][0].visible = true;
+//            worldField[i][HEIGHT - 1].visible = true;
+//            worldField[0][i].visible = true;
+//            worldField[WIDTH - 1][i].visible = true;
+//        }
 
         //actionSpots.add(new ActionSpot(x, x, y, y));
 
