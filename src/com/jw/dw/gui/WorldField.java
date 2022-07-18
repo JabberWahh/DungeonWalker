@@ -9,10 +9,6 @@ import com.jw.dw.randInt;
 import java.util.ArrayList;
 import java.util.Objects;
 
-/**
- * Created by vahma on 30.04.15.
- * WorldField
- */
 public class WorldField {
 
 
@@ -382,10 +378,7 @@ public class WorldField {
         for (int i = 1; i < WIDTH - 1; i++) {
             for (int j = 1; j < HEIGHT - 1; j++) {
                 if (Objects.equals(worldField[i][j].icon, AmbientDoor.icon)) {
-                    boolean itsDoor = false;
-                    if ((!worldField[i - 1][j].wall && !worldField[i + 1][j].wall) || (!worldField[i][j - 1].wall && !worldField[i][j + 1].wall)) {
-                        itsDoor = true;
-                    }
+                    boolean itsDoor = (!worldField[i - 1][j].wall && !worldField[i + 1][j].wall) || (!worldField[i][j - 1].wall && !worldField[i][j + 1].wall);
                     if (!itsDoor) {
                         if (randInt.GetRandInt(1, 10) == 10) {
                             worldField[i][j].icon = AmbientChest.icon;
@@ -397,7 +390,6 @@ public class WorldField {
                         }
                     }
                 }
-
             }
         }
     }

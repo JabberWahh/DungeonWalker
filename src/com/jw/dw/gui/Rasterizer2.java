@@ -17,9 +17,6 @@ import javafx.scene.text.Text;
 
 import java.util.Objects;
 
-/**
- * Created by vahma on 17.05.15.
- */
 public class Rasterizer2 {
 
 
@@ -38,28 +35,28 @@ public class Rasterizer2 {
             root.getChildren().clear();
             boolean fighting = false;
 
-            Image imgEmpty = new Image(getClass().getClassLoader().getResourceAsStream("floor.png"));
-            Image imgWall = new Image(getClass().getClassLoader().getResourceAsStream("wall.png"));
-            Image imgDoor = new Image(getClass().getClassLoader().getResourceAsStream("door.png"));
-            Image imgDoorCracked = new Image(getClass().getClassLoader().getResourceAsStream("open-door.png"));
-            Image imgHero = new Image(getClass().getClassLoader().getResourceAsStream("hero.png"));
-            Image imgHeroFight = new Image(getClass().getClassLoader().getResourceAsStream("hero-fight.png"));
-            Image imgChest = new Image(getClass().getClassLoader().getResourceAsStream("chest.png"));
-            Image imgExit = new Image(getClass().getClassLoader().getResourceAsStream("dngn_enter.png"));
+            Image imgEmpty = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("floor.png")));
+            Image imgWall = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("wall.png")));
+            Image imgDoor = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("door.png")));
+            Image imgDoorCracked = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("open-door.png")));
+            Image imgHero = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("hero.png")));
+            Image imgHeroFight = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("hero-fight.png")));
+            Image imgChest = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("chest.png")));
+            Image imgExit = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("dngn_enter.png")));
 
-            Image imgEnemy = new Image(getClass().getClassLoader().getResourceAsStream("enemy.png"));
-            Image imgEnemySpider = new Image(getClass().getClassLoader().getResourceAsStream("spider.png"));
-            Image imgEnemyGoblin = new Image(getClass().getClassLoader().getResourceAsStream("goblin.png"));
-            Image imgEnemyOrc = new Image(getClass().getClassLoader().getResourceAsStream("orc.png"));
-            Image imgEnemyDemon = new Image(getClass().getClassLoader().getResourceAsStream("demon.png"));
-            Image imgEnemyKobold = new Image(getClass().getClassLoader().getResourceAsStream("kobold.png"));
-            Image imgEnemyBeholder = new Image(getClass().getClassLoader().getResourceAsStream("beholder.png"));
-            Image imgEnemyWywern = new Image(getClass().getClassLoader().getResourceAsStream("wyvern.png"));
-            Image imgEnemyElemental = new Image(getClass().getClassLoader().getResourceAsStream("elemental.png"));
-            Image imgEnemyManticora = new Image(getClass().getClassLoader().getResourceAsStream("manticore.png"));
-            Image imgEnemyDragon = new Image(getClass().getClassLoader().getResourceAsStream("dragon.png"));
+            Image imgEnemy = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("enemy.png")));
+            Image imgEnemySpider = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("spider.png")));
+            Image imgEnemyGoblin = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("goblin.png")));
+            Image imgEnemyOrc = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("orc.png")));
+            Image imgEnemyDemon = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("demon.png")));
+            Image imgEnemyKobold = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("kobold.png")));
+            Image imgEnemyBeholder = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("beholder.png")));
+            Image imgEnemyWywern = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("wyvern.png")));
+            Image imgEnemyElemental = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("elemental.png")));
+            Image imgEnemyManticora = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("manticore.png")));
+            Image imgEnemyDragon = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("dragon.png")));
 
-            Image imgBlood = new Image(getClass().getClassLoader().getResourceAsStream("blood.png"));
+            Image imgBlood = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("blood.png")));
 
             if (showingStage == ShowingStage.MAP) {
                 for (int i = 0; i < sf.WIDTH; i++) {
@@ -84,7 +81,7 @@ public class Rasterizer2 {
                                 img.setY(y + (j * 32));
                             }
 
-                            if (field[i][j].icon == AmbientEmpty.icon) {
+                            if (Objects.equals(field[i][j].icon, AmbientEmpty.icon)) {
                                 img.setImage(imgEmpty);
                                 img.setX(x + (i * 32));
                                 img.setY(y + (j * 32));
@@ -96,34 +93,34 @@ public class Rasterizer2 {
                                 img.setY(y + (j * 32));
                                 if (field[i][j].enemy.getHP() > 0) {
                                     ImageView tmpView = new ImageView();
-                                    if (field[i][j].enemy.icon == "s") {
+                                    if (Objects.equals(field[i][j].enemy.icon, "s")) {
                                         img.setImage(imgEnemySpider);
                                         tmpView.setImage(imgEnemySpider);
-                                    } else if (field[i][j].enemy.icon == "g") {
+                                    } else if (Objects.equals(field[i][j].enemy.icon, "g")) {
                                         img.setImage(imgEnemyGoblin);
                                         tmpView.setImage(imgEnemyGoblin);
-                                    } else if (field[i][j].enemy.icon == "z") {
+                                    } else if (Objects.equals(field[i][j].enemy.icon, "z")) {
                                         img.setImage(imgEnemyOrc);
                                         tmpView.setImage(imgEnemyOrc);
-                                    } else if (field[i][j].enemy.icon == "d") {
+                                    } else if (Objects.equals(field[i][j].enemy.icon, "d")) {
                                         img.setImage(imgEnemyDemon);
                                         tmpView.setImage(imgEnemyDemon);
-                                    } else if (field[i][j].enemy.icon == "k") {
+                                    } else if (Objects.equals(field[i][j].enemy.icon, "k")) {
                                         img.setImage(imgEnemyKobold);
                                         tmpView.setImage(imgEnemyKobold);
-                                    } else if (field[i][j].enemy.icon == "b") {
+                                    } else if (Objects.equals(field[i][j].enemy.icon, "b")) {
                                         img.setImage(imgEnemyBeholder);
                                         tmpView.setImage(imgEnemyBeholder);
-                                    } else if (field[i][j].enemy.icon == "W") {
+                                    } else if (Objects.equals(field[i][j].enemy.icon, "W")) {
                                         img.setImage(imgEnemyWywern);
                                         tmpView.setImage(imgEnemyWywern);
-                                    } else if (field[i][j].enemy.icon == "E") {
+                                    } else if (Objects.equals(field[i][j].enemy.icon, "E")) {
                                         img.setImage(imgEnemyElemental);
                                         tmpView.setImage(imgEnemyElemental);
-                                    } else if (field[i][j].enemy.icon == "M") {
+                                    } else if (Objects.equals(field[i][j].enemy.icon, "M")) {
                                         img.setImage(imgEnemyManticora);
                                         tmpView.setImage(imgEnemyManticora);
-                                    } else if (field[i][j].enemy.icon == "D") {
+                                    } else if (Objects.equals(field[i][j].enemy.icon, "D")) {
                                         img.setImage(imgEnemyDragon);
                                         tmpView.setImage(imgEnemyDragon);
                                     } else {
@@ -194,7 +191,7 @@ public class Rasterizer2 {
 
             if (showingStage == ShowingStage.INVENTORY) { //Inventory
 
-                Image imgInventory = new Image(getClass().getClassLoader().getResourceAsStream("inventory.png"));
+                Image imgInventory = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("inventory.png")));
                 ImageView img = new ImageView();
                 img.setImage(imgInventory);
                 root.getChildren().add(img);
@@ -336,7 +333,7 @@ public class Rasterizer2 {
             root.getChildren().add(text);
 
             //Hero xp
-            text = new Text(1680, 48, "exp.: " + Hero.getInstance().xp);
+            text = new Text(1680, 48, "exp.: " + Hero.getInstance().xp + " / " + (Hero.getInstance().getNextLvlExp()));
             text.setFont(Font.font("Droid Sans Bold", 12));
             text.setFill(Color.rgb(255, 255, 153));
             root.getChildren().add(text);
@@ -355,12 +352,12 @@ public class Rasterizer2 {
 
 
             //Hero HP
-            String hp = "";
+            StringBuilder hp = new StringBuilder();
             for (int i = 1; i < (Hero.getInstance().getHP()) / ((100 * ((Hero.getInstance().lvl * 0.2) + 0.8))) * 20; i++) {
-                hp = hp + "▓";
+                hp.append("▓");
             }
 
-            text = new Text(1620, 88, hp);
+            text = new Text(1620, 88, hp.toString());
             text.setFont(Font.font("Droid Sans Bold", 12));
             text.setFill(Color.rgb(255, 51, 51));
             root.getChildren().add(text);
@@ -370,11 +367,11 @@ public class Rasterizer2 {
             text.setFill(Color.rgb(255, 255, 255));
             root.getChildren().add(text);
 
-            String hpS = "";
+            StringBuilder hpS = new StringBuilder();
             for (int i = 0; i < (hp.length() / 2) - 3; i++) {
-                hpS = hpS + " ";
+                hpS.append(" ");
             }
-            text = new Text(1640, 88, hpS + Hero.getInstance().getHP() + (Hero.getInstance().getMAXHP() < Hero.getInstance().getHP() ? " +++" : ""));
+            text = new Text(1640, 88, hpS.toString() + Hero.getInstance().getHP() + (Hero.getInstance().getMAXHP() < Hero.getInstance().getHP() ? " +++" : ""));
             text.setFont(Font.font("Droid Sans Bold", 12));
             text.setFill(Color.rgb(255, 255, 255));
             root.getChildren().add(text);
@@ -390,12 +387,12 @@ public class Rasterizer2 {
                 //Enemy
                 if (field[Hero.getInstance().posX][Hero.getInstance().posY].enemy.getHP() > 0) {
 
-                    hp = "▓";
+                    hp = new StringBuilder("▓");
                     for (int i = 1; i < ((field[Hero.getInstance().posX][Hero.getInstance().posY].enemy.getHP() * 20) / (field[Hero.getInstance().posX][Hero.getInstance().posY].enemy.hpmax)); i++) {
-                        hp = hp + "▓";
+                        hp.append("▓");
                     }
 
-                    text = new Text(1620, 128, hp);
+                    text = new Text(1620, 128, hp.toString());
                     text.setFont(Font.font("Droid Sans Bold", 12));
                     text.setFill(Color.rgb(255, 51, 51));
                     root.getChildren().add(text);
@@ -430,13 +427,13 @@ public class Rasterizer2 {
             //System.out.println(crossingLines(1, 1, 100, 100, 2, 3, 4, 5));
 
             if (showingStage == ShowingStage.MAP) {
-                Image imgDarkness = new Image(getClass().getClassLoader().getResourceAsStream("darkness.png"));
+                Image imgDarkness = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("darkness.png")));
 
                 int heroI = 0;
                 int heroJ = 0;
                 for (int i = 0; i < sf.WIDTH; i++) {
                     for (int j = 0; j < sf.HEIGHT; j++) {
-                        if (field[i][j].icon == Hero.icon) {
+                        if (Objects.equals(field[i][j].icon, Hero.icon)) {
                             heroI = i;
                             heroJ = j;
                             break;
@@ -490,9 +487,7 @@ public class Rasterizer2 {
 
         for (int i = upI; i < downI + 1 && alpha < 0.9; i++) {
             for (int j = upJ; j < downJ + 1 && alpha < 0.9; j++) {
-                if ((i == heroI && j == heroJ) || (i == sqI && j == sqJ)) {
-                    continue;
-                } else {
+                if (!(i == heroI && j == heroJ) && !(i == sqI && j == sqJ)) {
 //                    if (field[i][j].icon == AmbientWall.icon) {
 //                        if (crossingLines(heroI * 32, heroJ * 32, sqI * 32, sqJ * 32, i * 32 - 8, j * 32 - 8, i * 32 + 8, j * 32 + 8)) {
 //                            alpha = alpha + 0.425;
@@ -502,7 +497,7 @@ public class Rasterizer2 {
 //                            alpha = alpha + 0.425;
 //                        }
 //                    }
-                    if (field[i][j].icon == AmbientWall.icon) {
+                    if (Objects.equals(field[i][j].icon, AmbientWall.icon)) {
                         //1 corner
 
                         if (crossingLines(heroI * 32, heroJ * 32, sqI * 32 - 16, sqJ * 32 - 16, i * 32 - 16, j * 32 - 16, i * 32 + 16, j * 32 + 16)) {

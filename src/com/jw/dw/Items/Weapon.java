@@ -3,13 +3,10 @@ package com.jw.dw.Items;
 import javafx.scene.paint.Color;
 import com.jw.dw.randInt;
 
-/**Weapon
- * Created by vahma on 14.05.15.
- */
 public class Weapon {
-    private ItemQuality quality;
+    private final ItemQuality quality;
     public String weaponName;
-    public int lvl = 1;
+    public int lvl;
     public Color color;
 
     public Weapon(int dungeonLevel) {
@@ -44,7 +41,7 @@ public class Weapon {
             color = Color.rgb(51, 133, 255);
         } else if (w < 47) {
             quality = ItemQuality.Rare;
-            color = Color.rgb(51, 133, 255);
+            color = Color.rgb(131, 24, 255);
         } else {
             quality = ItemQuality.Unique;
             color = Color.rgb(255, 153, 0);
@@ -70,7 +67,6 @@ public class Weapon {
         if (quality == ItemQuality.Unique) {
             dmgTmp = dmgTmp * 2;
         }
-
 
         return dmgTmp;
 

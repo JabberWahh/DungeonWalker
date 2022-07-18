@@ -5,9 +5,6 @@ import com.jw.dw.randInt;
 
 import java.util.ArrayList;
 
-/**Action spot
- * Created by vahma on 03.05.15.
- */
 public class ActionSpot {
     public int x;
     public int y;
@@ -40,9 +37,9 @@ public class ActionSpot {
         ArrayList<ActionSpot> asList = wf.actionSpots;
 
         for(int i=asList.size()-1; i>-1;i--){
-            ArrayList apList = asList.get(i).actionPoints;
+            ArrayList<ActionPoint> apList = asList.get(i).actionPoints;
             for(int j=apList.size()-1;j>-1;j--){
-                ActionPoint ap = (ActionPoint)apList.get(j);
+                ActionPoint ap = apList.get(j);
                 if(wf.worldField[ap.x][ap.y].wall){
                     apList.remove(j);
                 }

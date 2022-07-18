@@ -23,18 +23,14 @@ import javafx.scene.Group;
 
 import javafx.scene.paint.Color;
 
+import java.util.Objects;
 
-/**
- * Created by vahma on 27.04.15.
- * Dungeon walker
- */
 public class Main extends Application {
 
-    private static Timer timer;
     private static Group root;
     private static Rasterizer2 rastr;
 
-    private AnimationTimer at = new AnimationTimer() {
+    private final AnimationTimer at = new AnimationTimer() {
         @Override
         public void handle(long now) {
             rastr.Draw(root);
@@ -43,12 +39,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Dungeon Walker ver 0.04");
+        primaryStage.setTitle("Dungeon Walker ver 0.05");
         root = new Group();
         rastr = new Rasterizer2();
         //
 
-        Scene sC = new Scene(root, 1800, 880, Color.rgb(34, 34, 34, 1));
+        Scene sC = new Scene(root, 1800, 1040, Color.rgb(34, 34, 34, 1));
 
         sC.setOnKeyPressed(ke -> {
             if (ke.getCode() == KeyCode.I) {
@@ -70,7 +66,7 @@ public class Main extends Application {
         at.start();
         //
 
-        Image applicationIcon = new Image(getClass().getResourceAsStream("ADOMIcon2.png"));
+        Image applicationIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("ADOMIcon2.png")));
         primaryStage.getIcons().add(applicationIcon);
 
         primaryStage.setScene(sC);
@@ -96,7 +92,7 @@ public class Main extends Application {
         TimerAllTasks task = new TimerAllTasks(hero, act);
 
         //Mooving phase
-        timer = new Timer(1000, e -> task.run());
+        Timer timer = new Timer(1000, e -> task.run());
         task.phase = Phases.MOOVING;
         timer.start();
         //

@@ -1,16 +1,10 @@
 package com.jw.dw.AI;
 
-
-/**
- * Created by vahma on 01.05.15.
- * Table
- */
-
 class Table<T extends Cell> {
 
-    private int width;
-    private int height;
-    private Cell[][] table;
+    private final int width;
+    private final int height;
+    private final Cell[][] table;
 
     /**
      * Создаем карту игры с размерами width и height

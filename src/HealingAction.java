@@ -3,10 +3,6 @@ import com.jw.dw.chars.Hero;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by vahma on 27.04.15.
- * Starts when Hero needs a rest
- */
 public class HealingAction {
     private Hero hero;
     private static HealingAction instance;

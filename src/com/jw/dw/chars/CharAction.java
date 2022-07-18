@@ -11,11 +11,6 @@ import com.jw.dw.randInt;
 
 import java.util.ArrayList;
 
-
-/**
- * Created by vahma on 27.04.15.
- * Figting mode
- */
 public class CharAction {
 
     public boolean battleStarted;
@@ -34,60 +29,7 @@ public class CharAction {
         return instance;
     }
 
-    /*public void StartBattle(Hero h, Enemy e) {
-
-        hero = h;
-        enemy = e;
-
-
-        if (!battleStarted) {
-            battleStarted = true;
-            Timer timer2 = new Timer();
-
-            TimerTask task = new TimerTask() {
-                public void run() {
-
-                    //Iterator<Enemy> iterEnemy = enemy.iterator();
-
-                    // while (iterEnemy.hasNext()) {
-                    for (Iterator<Enemy> iterEnemy = enemy.iterator(); iterEnemy.hasNext(); ) {
-
-                        Enemy enOne = iterEnemy.next();
-
-                        int dmgToHero = enOne.GetDmg();
-                        int dmgToEnemy = hero.GetDmg();
-
-                        hero.SetHP(hero.GetHP() - dmgToHero);
-                        enOne.SetHP(enOne.GetHP() - dmgToEnemy);
-                        System.out.println("H -> " + dmgToEnemy + " dmg., " + hero.GetHP() + " hp left. E@" + enOne.enemyName + "@ ->" + dmgToHero + " dmg., " + enOne.GetHP());
-
-                        if (enOne.GetHP() <= 0) {
-                            if (!enemy.isEmpty()) {
-                                iterEnemy.remove();
-                            }
-                        }
-
-                        if (hero.GetHP() <= 0 || enemy.isEmpty()) {
-                            battleStarted = false;
-                            try {
-                                timer2.cancel();
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
-                            }
-
-                        }
-
-                    }
-                }
-            };
-            timer2.scheduleAtFixedRate(task, 100, 100);
-        }
-
-
-    }*/
-
     public void battle(Hero h, Enemy e) {
-
 
         dmgToHero = e.getDmg();
         dmgToEnemy = h.getDmg();
@@ -108,15 +50,20 @@ public class CharAction {
         e.setHP(e.getHP() - dmgToEnemy);
         System.out.println("H -> " + dmgToEnemy + " dmg., " + h.getHP() + " hp left. E@" + e.icon + "@ ->" + dmgToHero + " dmg., " + e.getHP());
 
-
         if (h.getHP() <= 0 || e.getHP() <= 0) {
             battleStarted = false;
         }
         if (h.getHP() > 0 && e.getHP() <= 0) {
-            h.xp = h.xp + e.xp;
+            h.xp += e.xp;
             h.monstersKilled++;
             if (e.elite) {
                 flaskFinding();
+            }
+            else {
+                int rnd = randInt.GetRandInt(1, 4);
+                if(rnd == 1){
+                    flaskFinding();
+                }
             }
             if (h.strongestEnemy == null) {
                 h.strongestEnemy = e;
@@ -125,21 +72,17 @@ public class CharAction {
                     h.strongestEnemy = e;
                 }
             }
-            if (h.xp >= h.lvl * 150) {
+            if (h.xp >= h.getNextLvlExp()) {
                 h.lvl++;
                 if (h.getHP() < h.getMAXHP()) {//if not mega health then restore all
                     h.setHP();
                 }
                 h.SetDmg();
             }
-
         }
-
-
     }
 
-
-    public void doorMooving() {
+    public void doorMoving() {
         Hero hero = Hero.getInstance();
         if (hero.mooved) {
             WorldField wf = WorldField.GetInstance();
@@ -176,7 +119,6 @@ public class CharAction {
                     }
                 }
 
-
                 //Deletig spot
                 asList.remove(neededActionSpot);
             }
@@ -187,8 +129,8 @@ public class CharAction {
         Hero hero = Hero.getInstance();
         WorldField wf = WorldField.GetInstance();
 
-        int rnd = randInt.GetRandInt(1, 2);//1 of 5 for weapon
-        if (rnd == 1) {
+        int rnd = randInt.GetRandInt(1, 10);//1 of 5 for weapon
+        if (rnd >= 4) {
             //get weapon
             Weapon weapon = new Weapon(wf.lvl);
             if (hero.weapon == null) {
@@ -199,8 +141,8 @@ public class CharAction {
             }
         }
 
-        rnd = randInt.GetRandInt(1, 2);//1 of 5 for armour
-        if (rnd == 1) {
+        rnd = randInt.GetRandInt(1, 10);//1 of 5 for armour
+        if (rnd >= 4) {
             //get armour
             Armour armour = new Armour(wf.lvl);
             boolean needIt = true;
@@ -239,10 +181,7 @@ public class CharAction {
                 } else {
                     hero.flasks.add(new Flask(FlaskKind.Damage));
                 }
-
             }
-
-
         }
     }
 
@@ -255,6 +194,4 @@ public class CharAction {
             }
         }
     }
-
-
 }

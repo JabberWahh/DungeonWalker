@@ -3,14 +3,11 @@ package com.jw.dw.Items;
 import com.jw.dw.randInt;
 import javafx.scene.paint.Color;
 
-/**Armour
- * Created by vahma on 14.05.15.
- */
 public class Armour {
-    private ItemQuality quality;
+    private final ItemQuality quality;
     public ArmourPart armourPart;
     public String armourName;
-    public int lvl = 1;
+    public int lvl;
     public Color color;
 
     public Armour(int dungeonLevel){
@@ -50,7 +47,7 @@ public class Armour {
             color = Color.rgb(51, 133, 255);
         } else if (w < 47) {
             quality = ItemQuality.Rare;
-            color = Color.rgb(51, 133, 255);
+            color = Color.rgb(131, 24, 255);
         } else {
             quality = ItemQuality.Unique;
             color = Color.rgb(255, 153, 0);

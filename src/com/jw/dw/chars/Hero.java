@@ -6,10 +6,6 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
-/**
- * Created by vahma on 27.04.15.
- * Hero
- */
 public class Hero implements Characters {
     private Integer hp;
     private Integer dmg;
@@ -65,11 +61,7 @@ public class Hero implements Characters {
 
     public void addHP(int pl) {
 
-        if (hp + pl <= getMAXHP()) {
-            hp = hp + pl;
-        } else {
-            hp = getMAXHP();
-        }
+        hp = Math.min(hp + pl, getMAXHP());
 
     }
 
@@ -78,6 +70,9 @@ public class Hero implements Characters {
         return (int) (100 * ((lvl * 0.1) + 0.9));
     }
 
+    public int getNextLvlExp(){
+        return  (int)(lvl / 1.5 * 100);
+    }
 
     public Integer getDmg() {
 
@@ -107,7 +102,7 @@ public class Hero implements Characters {
 
     public void SetDmg() {
         //dmg = (int) (5 * ((lvl * 0.1) + 0.1));
-        dmg = 2 + lvl - 1;
+        dmg = 3 + (lvl * 2) - 1;
     }
 
     public Integer getHP() {

@@ -1,10 +1,5 @@
 package com.jw.dw.AI;
 
-/**
- * Created by vahma on 01.05.15.
- * AStar
- */
-
 import com.jw.dw.Ambient.CellMap;
 import com.jw.dw.chars.Aim;
 import com.jw.dw.chars.Hero;
@@ -12,6 +7,7 @@ import com.jw.dw.gui.WorldField;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class AStar {
 
@@ -40,7 +36,7 @@ public class AStar {
         arY = new ArrayList<>();
         // Создадим все нужные списки
         Table<Cell> cellList = new Table<>(wFObj.WIDTH, wFObj.HEIGHT);
-        Table blockList = new Table(wFObj.WIDTH, wFObj.HEIGHT);
+        Table<? extends Cell> blockList = new Table<>(wFObj.WIDTH, wFObj.HEIGHT);
         LinkedList<Cell> openList = new LinkedList<>();
         LinkedList<Cell> closedList = new LinkedList<>();
         LinkedList<Cell> tmpList = new LinkedList<>();
@@ -189,7 +185,7 @@ public class AStar {
             }
 
             for (int i = arX.size() - 1; i >0; i--) {
-                if(arX.get(i) == aim.posX && arY.get(i) == aim.posY){
+                if(Objects.equals(arX.get(i), aim.posX) && Objects.equals(arY.get(i), aim.posY)){
                     arX.remove(i);
                     arY.remove(i);
                 }

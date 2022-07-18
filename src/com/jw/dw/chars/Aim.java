@@ -4,9 +4,6 @@ import com.jw.dw.AI.AStar;
 import com.jw.dw.Ambient.*;
 import com.jw.dw.gui.WorldField;
 
-/**Aim
- * Created by vahma on 04.05.15.
- */
 public class Aim {
     public Integer posX = 0;
     public Integer posY = 0;
@@ -80,11 +77,11 @@ public class Aim {
                 if (tYUp < 2) {
                     tYUp = 2;
                 }
-                if (tXDown > 48) {
-                    tXDown = 48;
+                if (tXDown > WorldField.GetInstance().WIDTH - 2) {
+                    tXDown = WorldField.GetInstance().WIDTH - 2;
                 }
-                if (tYDown > 48) {
-                    tYDown = 48;
+                if (tYDown > WorldField.GetInstance().HEIGHT - 2) {
+                    tYDown = WorldField.GetInstance().HEIGHT - 2;
                 }
 
                 for (int i = tXUp; i < tXDown; i++) {

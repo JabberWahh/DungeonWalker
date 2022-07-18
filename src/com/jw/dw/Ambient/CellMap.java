@@ -2,12 +2,9 @@ package com.jw.dw.Ambient;
 
 import com.jw.dw.chars.Enemy;
 
-/**CellMap
- * Created by vahma on 04.05.15.
- */
 public class CellMap {
-    public boolean wall = true;
-    public String icon = AmbientWall.icon;
+    public boolean wall;
+    public String icon;
     public boolean visible = false;
     public AmbientEnum kind;
     public boolean activated = false;

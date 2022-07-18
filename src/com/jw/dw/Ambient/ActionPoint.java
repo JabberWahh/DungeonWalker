@@ -1,8 +1,5 @@
 package com.jw.dw.Ambient;
 
-/**Action points
- * Created by vahma on 03.05.15.
- */
 public class ActionPoint {
     public final int x;
     public final int y;

@@ -7,22 +7,16 @@ import com.jw.dw.chars.*;
 import com.jw.dw.gui.WorldField;
 
 import java.util.ArrayList;
-import javax.swing.*;
 
-/**
- * Created by vahma on 28.04.15.
- * battle time
- */
 class TimerAllTasks {
 
     private final Hero hero;
     private final CharAction act;
-    private ArrayList enemyList;
+    private ArrayList<Enemy> enemyList;
     public Phases phase;
-    private boolean enemySpoted = false;
+    private final boolean enemySpoted = false;
     private String tmpChar = AmbientEmpty.icon;
 
-    private ArrayList route;
     //private Point tmpPoint;
 
     public TimerAllTasks(Hero h, CharAction cAct) {
@@ -52,14 +46,14 @@ class TimerAllTasks {
             }
         }
 
-
         //healing by regen
         //Activation
-        if (!Flask.isActivatedFlaskByKind(FlaskKind.HealTime) && (hero.getMAXHP() * 0.3) > hero.getHP()) {
+        if (!Flask.isActivatedFlaskByKind(FlaskKind.HealTime) && (hero.getMAXHP() * 0.6) > hero.getHP()) {
             boolean isPermanent = false;
             for (int i = 0; i < hero.flasks.size(); i++) {
                 if (hero.flasks.get(i).flaskKind == FlaskKind.HealPermanent) {
                     isPermanent = true;//waiting till low hp to use permanent
+                    break;
                 }
             }
             if (!isPermanent) {
@@ -73,8 +67,7 @@ class TimerAllTasks {
             }
         }
 
-
-        if (enemy != null && enemy.elite) {
+        if ((enemy != null && enemy.elite ) || ((hero.getMAXHP() * 0.3) > hero.getHP())) {
             //Flask of stone
             if (!Flask.isActivatedFlaskByKind(FlaskKind.Armor)) {
                 for (int i = 0; i < hero.flasks.size(); i++) {
@@ -125,6 +118,7 @@ class TimerAllTasks {
                 if (hero.flasks.get(i).flaskKind == FlaskKind.Armor) {
                     if (hero.flasks.get(i).value <= 0) {
                         hero.flasks.remove(i);
+                        break;
                     } else {
                         hero.flasks.get(i).value--;
                     }
@@ -137,6 +131,7 @@ class TimerAllTasks {
                 if (hero.flasks.get(i).flaskKind == FlaskKind.Damage) {
                     if (hero.flasks.get(i).value <= 0) {
                         hero.flasks.remove(i);
+                        break;
                     } else {
                         hero.flasks.get(i).value--;
                     }
@@ -149,17 +144,14 @@ class TimerAllTasks {
             hero.setHP(hero.getHP() - 1);
         }
 
-
         //End using flasks//
 
         if (phase == Phases.FIGHT && hero.getHP() > 0) {
             CharAction act = CharAction.getInstance();
             //Enemy enemy = ec.GetEnemys();
 
-
-            if (act.battleStarted) {
+            if (act.battleStarted && enemy != null) {
                 act.battle(hero, enemy);
-
             }
 
             if (enemy != null && enemy.getHP() <= 0) {
@@ -193,9 +185,6 @@ class TimerAllTasks {
                 act.battleStarted = true;
             }
 
-
-
-
             /*if (enemyList.isEmpty() && !hero.needRest && hero.GetHP() > 0) {
 
 
@@ -226,14 +215,12 @@ class TimerAllTasks {
                 hero.setHP();
                 tmpChar = "☼";
             }
-
         }
 
         if (phase == Phases.MOOVING) {
 
             //Поиск пути
             AStar aStar = AStar.GetInstance();
-
 
             if (!aStar.routeFound) {
                 Aim aim = Aim.GetInstance();
@@ -271,7 +258,7 @@ class TimerAllTasks {
                         }
                         if (prevCell.kind == AmbientEnum.Door) {
                             hero.mooved = true;
-                            act.doorMooving();
+                            act.doorMoving();
                         }
                         if (prevCell.exit) {
                             sf.lvl++;
@@ -296,8 +283,6 @@ class TimerAllTasks {
                             aStar.Start();
                         }
                     }
-
-
                 }
 
             } else {
@@ -305,11 +290,6 @@ class TimerAllTasks {
                 aim.SetAim(true);
                 aStar.Start();
             }
-
         }
-
-
     }
-
-
 }

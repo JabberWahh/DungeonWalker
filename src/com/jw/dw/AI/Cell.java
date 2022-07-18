@@ -1,15 +1,11 @@
 package com.jw.dw.AI;
 
-/**
- * Created by vahma on 01.05.15.
- * Cell
- */
 class Cell {
 
-    public int x = -1;
-    public int y = -1;
+    public int x;
+    public int y;
     public Cell parent = this;
-    public boolean blocked = false;
+    public boolean blocked;
     private boolean start = false;
     private boolean finish = false;
     public boolean road = false;

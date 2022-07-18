@@ -3,9 +3,6 @@ package com.jw.dw.Items;
 import com.jw.dw.chars.Hero;
 import com.jw.dw.randInt;
 
-/**Flask
- * Created by vahma on 15.05.15.
- */
 public class Flask {
     public boolean activated = false;
     public FlaskKind flaskKind;
