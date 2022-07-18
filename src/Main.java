@@ -4,6 +4,7 @@ import com.jw.dw.chars.CharAction;
 import com.jw.dw.chars.Hero;
 
 
+import com.jw.dw.gui.Rasterizer2;
 import com.jw.dw.gui.ShowingStage;
 import com.jw.dw.gui.WorldField;
 import javafx.animation.AnimationTimer;
@@ -33,16 +34,12 @@ public class Main extends Application {
     private static Group root;
     private static Rasterizer2 rastr;
 
-
-    //gui initialization
-
     private AnimationTimer at = new AnimationTimer() {
         @Override
         public void handle(long now) {
             rastr.Draw(root);
         }
     };
-
 
     @Override
     public void start(Stage primaryStage) {
@@ -51,8 +48,7 @@ public class Main extends Application {
         rastr = new Rasterizer2();
         //
 
-        Scene sC = new Scene(root, 1300, 880, Color.rgb(34, 34, 34, 1));
-
+        Scene sC = new Scene(root, 1800, 880, Color.rgb(34, 34, 34, 1));
 
         sC.setOnKeyPressed(ke -> {
             if (ke.getCode() == KeyCode.I) {
@@ -70,16 +66,12 @@ public class Main extends Application {
         //Start render
         Timer timerRendr = new Timer(1000, e -> rastr.startDraw = true);
 
-
-
         WorldField sf = WorldField.GetInstance();
         at.start();
         //
 
         Image applicationIcon = new Image(getClass().getResourceAsStream("ADOMIcon2.png"));
         primaryStage.getIcons().add(applicationIcon);
-
-
 
         primaryStage.setScene(sC);
         primaryStage.show();
@@ -90,9 +82,7 @@ public class Main extends Application {
             System.exit(0);
         });
 
-
     }
-
 
     ///////////////////////////////
 
@@ -100,28 +90,16 @@ public class Main extends Application {
         System.out.println("Started...");
 
         Hero hero = Hero.getInstance();
-        //hero.SetHP(100);
-        //hero.SetDmg(5);
 
         CharAction act = CharAction.getInstance();
-        //act.StartBattle(hero, enemyList);
 
         TimerAllTasks task = new TimerAllTasks(hero, act);
-
-        //Fighting phase
-        //timer = new Timer(100, e -> task.run(timer));
-
-        //timer.start();
-        //
 
         //Mooving phase
         timer = new Timer(1000, e -> task.run());
         task.phase = Phases.MOOVING;
         timer.start();
         //
-
         launch(args);
-
     }
-
 }

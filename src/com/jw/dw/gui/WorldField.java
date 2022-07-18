@@ -20,7 +20,7 @@ public class WorldField {
 
     public CellMap[][] worldField;
     public final int WIDTH = 50;
-    public final int HEIGHT = 50;
+    public final int HEIGHT = 30;
     private boolean set;
     public int lvl = 1;
     //private int emptimess = 0;
@@ -62,7 +62,7 @@ public class WorldField {
         //Новый алгоритм
 
         for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < WIDTH; j++) {
+            for (int j = 0; j < HEIGHT; j++) {
                 worldField[i][j] = new CellMap(AmbientWall.icon, AmbientEnum.Wall);
             }
         }
@@ -379,8 +379,8 @@ public class WorldField {
     }
 
     private void ConvertDoor() {
-        for (int i = 1; i < HEIGHT - 1; i++) {
-            for (int j = 1; j < WIDTH - 1; j++) {
+        for (int i = 1; i < WIDTH - 1; i++) {
+            for (int j = 1; j < HEIGHT - 1; j++) {
                 if (Objects.equals(worldField[i][j].icon, AmbientDoor.icon)) {
                     boolean itsDoor = false;
                     if ((!worldField[i - 1][j].wall && !worldField[i + 1][j].wall) || (!worldField[i][j - 1].wall && !worldField[i][j + 1].wall)) {
@@ -400,11 +400,6 @@ public class WorldField {
 
             }
         }
-
-        //!!!!!!!
-        /*worldField[Hero.getInstance().posX+2][Hero.getInstance().posY-2].icon = AmbientChest.icon;
-        worldField[Hero.getInstance().posX+2][Hero.getInstance().posY-2].kind = AmbientEnum.Chest;
-        worldField[Hero.getInstance().posX+2][Hero.getInstance().posY-2].wall = false;*/
     }
 }
 

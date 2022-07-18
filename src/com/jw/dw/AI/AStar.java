@@ -67,7 +67,7 @@ public class AStar {
         // Заполним карту как-то клетками, учитывая преграду
         for (int i = 0; i < wFObj.WIDTH; i++) {
             for (int j = 0; j < wFObj.HEIGHT; j++) {
-                cellList.add(new Cell(j, i, blockList.get(j, i).blocked));
+                cellList.add(new Cell(i, j, blockList.get(i, j).blocked));
             }
         }
 

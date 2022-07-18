@@ -1,3 +1,5 @@
+package com.jw.dw.gui;
+
 import com.jw.dw.Ambient.*;
 import com.jw.dw.Items.ArmourPart;
 import com.jw.dw.Items.Flask;
@@ -28,21 +30,8 @@ public class Rasterizer2 {
 
         int x = 0;
         int y = 0;
-        /*int red = 255;
-        int green = 40;
-        int blue = 50;
-        */
-
-
-        /*Text text = new Text(x, y, "JavaFX 2.0");
-        text.setFont(Font.font("Droid Sans Bold", FontWeight.BOLD, 20));
-
-        text.setFill(Color.rgb(red, green, blue, .99));
-        text.setRotate(0);
-        root.getChildren().add(text);*/
 
         WorldField sf = WorldField.GetInstance();
-        //String[][] field = sf.SetField();
         CellMap[][] field = sf.GetField();
 
         if (startDraw) {
@@ -77,36 +66,34 @@ public class Rasterizer2 {
                     for (int j = 0; j < sf.HEIGHT; j++) {
                         if (field[i][j].visible) {
                             ImageView img = new ImageView();
-                            img.setScaleX(0.5);
-                            img.setScaleY(0.5);
+//                            img.setScaleX(0.5);
+//                            img.setScaleY(0.5);
 
                             String ch = AmbientEmpty.icon;
                             if (field[i][j] != null) {
                                 ch = field[i][j].icon;
                             }
 
-
-                            Text text = new Text(x + (i * 16), y + (j * 16), ch);
-                            //text.setFont(Font.font("Droid Sans Bold", 16));
+                            Text text = new Text(x + (i * 32), y + (j * 32), ch);
 
                             //Defaul color
                             text.setFill(Color.rgb(0, 153, 51, 1));
                             if (Objects.equals(ch, AmbientWall.icon)) {
                                 img.setImage(imgWall);
-                                img.setX(x + (i * 16));
-                                img.setY(y + (j * 16));
+                                img.setX(x + (i * 32));
+                                img.setY(y + (j * 32));
                             }
 
                             if (field[i][j].icon == AmbientEmpty.icon) {
                                 img.setImage(imgEmpty);
-                                img.setX(x + (i * 16));
-                                img.setY(y + (j * 16));
+                                img.setX(x + (i * 32));
+                                img.setY(y + (j * 32));
                                 img.setOpacity(0.1);
                             }
 
                             if (field[i][j].enemy != null) {
-                                img.setX(x + (i * 16));
-                                img.setY(y + (j * 16));
+                                img.setX(x + (i * 32));
+                                img.setY(y + (j * 32));
                                 if (field[i][j].enemy.getHP() > 0) {
                                     ImageView tmpView = new ImageView();
                                     if (field[i][j].enemy.icon == "s") {
@@ -145,8 +132,8 @@ public class Rasterizer2 {
                                     }
 
                                     //Enemy icon
-                                    tmpView.setX(850);
-                                    tmpView.setY(132);
+                                    tmpView.setX(1620);
+                                    tmpView.setY(188);
                                     root.getChildren().add(tmpView);
                                     //
 
@@ -159,12 +146,12 @@ public class Rasterizer2 {
                             if (Objects.equals(ch, Hero.icon)) {
                                 if (fighting) {
                                     img.setImage(imgHeroFight);
-                                    img.setX(x + (i * 16));
-                                    img.setY(y + (j * 16));
+                                    img.setX(x + (i * 32));
+                                    img.setY(y + (j * 32));
                                 } else {
                                     img.setImage(imgHero);
-                                    img.setX(x + (i * 16));
-                                    img.setY(y + (j * 16));
+                                    img.setX(x + (i * 32));
+                                    img.setY(y + (j * 32));
                                 }
                                 if (Hero.getInstance().getHP() <= 0) {
                                     text.setFill(Color.rgb(5, 5, 5));
@@ -173,27 +160,27 @@ public class Rasterizer2 {
                             if (Objects.equals(ch, AmbientDoor.icon)) {
                                 if (field[i][j].activated) {
                                     img.setImage(imgDoorCracked);
-                                    img.setX(x + (i * 16));
-                                    img.setY(y + (j * 16));
+                                    img.setX(x + (i * 32));
+                                    img.setY(y + (j * 32));
                                 } else {
                                     img.setImage(imgDoor);
-                                    img.setX(x + (i * 16));
-                                    img.setY(y + (j * 16));
+                                    img.setX(x + (i * 32));
+                                    img.setY(y + (j * 32));
                                 }
 
                             }
 
                             if (field[i][j].exit) {
                                 img.setImage(imgExit);
-                                img.setX(x + (i * 16));
-                                img.setY(y + (j * 16));
+                                img.setX(x + (i * 32));
+                                img.setY(y + (j * 32));
                             }
                             if (Objects.equals(ch, AmbientChest.icon)) {
                                 img.setScaleX(0.5);
                                 img.setScaleY(0.5);
                                 img.setImage(imgChest);
-                                img.setX(x + (i * 16));
-                                img.setY(y + (j * 16));
+                                img.setX(x + (i * 32));
+                                img.setY(y + (j * 32));
                             }
 
                             //text.setRotate(0);
@@ -211,77 +198,6 @@ public class Rasterizer2 {
                 ImageView img = new ImageView();
                 img.setImage(imgInventory);
                 root.getChildren().add(img);
-                /*for (int i = 1; i < sf.WIDTH - 1; i++) {
-                    Text text = new Text((i * 15) + 15, 17, "═");
-                    text.setFont(Font.font("Droid Sans Bold", 16));
-                    text.setFill(Color.rgb(107, 71, 36));
-                    root.getChildren().add(text);
-
-                    text = new Text((i * 15) + 15, 850, "═");
-                    text.setFont(Font.font("Droid Sans Bold", 16));
-                    text.setFill(Color.rgb(107, 71, 36));
-                    root.getChildren().add(text);
-
-                    text = new Text((i * 15) + 15, 153, "═");
-                    text.setFont(Font.font("Droid Sans Bold", 16));
-                    text.setFill(Color.rgb(107, 71, 36));
-                    root.getChildren().add(text);
-
-                    text = new Text((i * 15) + 15, 512, "═");
-                    text.setFont(Font.font("Droid Sans Bold", 16));
-                    text.setFill(Color.rgb(107, 71, 36));
-                    root.getChildren().add(text);
-
-                    text = new Text(15, (i * 17) + 17, "║");
-                    text.setFont(Font.font("Droid Sans Bold", 16));
-                    text.setFill(Color.rgb(107, 71, 36));
-                    root.getChildren().add(text);
-
-                    text = new Text(750, (i * 17) + 17, "║");
-                    text.setFont(Font.font("Droid Sans Bold", 16));
-                    text.setFill(Color.rgb(107, 71, 36));
-                    root.getChildren().add(text);
-                }*/
-                /*Text text = new Text(15, 17, "╔");
-                text.setFont(Font.font("Droid Sans Bold", 16));
-                text.setFill(Color.rgb(107, 71, 36));
-                root.getChildren().add(text);
-
-                text = new Text(15, 850, "╚");
-                text.setFont(Font.font("Droid Sans Bold", 16));
-                text.setFill(Color.rgb(107, 71, 36));
-                root.getChildren().add(text);
-
-                text = new Text(750, 17, "╗");
-                text.setFont(Font.font("Droid Sans Bold", 16));
-                text.setFill(Color.rgb(107, 71, 36));
-                root.getChildren().add(text);
-
-                text = new Text(750, 850, "╝");
-                text.setFont(Font.font("Droid Sans Bold", 16));
-                text.setFill(Color.rgb(107, 71, 36));
-                root.getChildren().add(text);
-
-                text = new Text(15, 153, "╠");
-                text.setFont(Font.font("Droid Sans Bold", 16));
-                text.setFill(Color.rgb(107, 71, 36));
-                root.getChildren().add(text);
-
-                text = new Text(750, 153, "╣");
-                text.setFont(Font.font("Droid Sans Bold", 16));
-                text.setFill(Color.rgb(107, 71, 36));
-                root.getChildren().add(text);
-
-                text = new Text(15, 512, "╠");
-                text.setFont(Font.font("Droid Sans Bold", 16));
-                text.setFill(Color.rgb(107, 71, 36));
-                root.getChildren().add(text);
-
-                text = new Text(750, 512, "╣");
-                text.setFont(Font.font("Droid Sans Bold", 16));
-                text.setFill(Color.rgb(107, 71, 36));
-                root.getChildren().add(text);
-                */
 
                 //Info
 
@@ -408,64 +324,64 @@ public class Rasterizer2 {
             }
 
             //Name
-            Text text = new Text(850, 28, "Hero: " + Hero.getInstance().heroName);
+            Text text = new Text(1620, 28, "Hero: " + Hero.getInstance().heroName);
             text.setFont(Font.font("IncisedBlack Normal", 12));
             text.setFill(Color.rgb(255, 255, 153));
             root.getChildren().add(text);
 
             //Hero lvl
-            text = new Text(850, 48, "Lvl: " + Hero.getInstance().lvl);
+            text = new Text(1620, 48, "Lvl: " + Hero.getInstance().lvl);
             text.setFont(Font.font("Droid Sans Bold", 12));
             text.setFill(Color.rgb(255, 255, 153));
             root.getChildren().add(text);
 
             //Hero xp
-            text = new Text(910, 48, "exp.: " + Hero.getInstance().xp);
+            text = new Text(1680, 48, "exp.: " + Hero.getInstance().xp);
             text.setFont(Font.font("Droid Sans Bold", 12));
             text.setFill(Color.rgb(255, 255, 153));
             root.getChildren().add(text);
 
             //Dmg
-            text = new Text(1040, 48, "dmg.: " + (int) Hero.getInstance().getStandartDmg() + (Flask.isActivatedFlaskByKind(FlaskKind.Damage) ? " x4" : ""));
+            text = new Text(1620, 68, "dmg.: " + (int) Hero.getInstance().getStandartDmg() + (Flask.isActivatedFlaskByKind(FlaskKind.Damage) ? " x4" : ""));
             text.setFont(Font.font("Droid Sans Bold", 12));
             text.setFill(Color.rgb(255, 255, 153));
             root.getChildren().add(text);
 
             //Armour
-            text = new Text(1140, 48, "armour.: " + (int) Hero.getInstance().getStandartArmour() + (Flask.isActivatedFlaskByKind(FlaskKind.Armor) ? " x4" : ""));
+            text = new Text(1680, 68, "armour.: " + (int) Hero.getInstance().getStandartArmour() + (Flask.isActivatedFlaskByKind(FlaskKind.Armor) ? " x4" : ""));
             text.setFont(Font.font("Droid Sans Bold", 12));
             text.setFill(Color.rgb(255, 255, 153));
             root.getChildren().add(text);
 
 
             //Hero HP
-            text = new Text(850, 68, "HP: ");
-            text.setFont(Font.font("Droid Sans Bold", 12));
-            text.setFill(Color.rgb(255, 255, 153));
-            root.getChildren().add(text);
-
             String hp = "";
             for (int i = 1; i < (Hero.getInstance().getHP()) / ((100 * ((Hero.getInstance().lvl * 0.2) + 0.8))) * 20; i++) {
                 hp = hp + "▓";
             }
 
-            text = new Text(880, 68, hp);
+            text = new Text(1620, 88, hp);
             text.setFont(Font.font("Droid Sans Bold", 12));
             text.setFill(Color.rgb(255, 51, 51));
+            root.getChildren().add(text);
+
+            text = new Text(1620, 88, "HP: ");
+            text.setFont(Font.font("Droid Sans Bold", 12));
+            text.setFill(Color.rgb(255, 255, 255));
             root.getChildren().add(text);
 
             String hpS = "";
             for (int i = 0; i < (hp.length() / 2) - 3; i++) {
                 hpS = hpS + " ";
             }
-            text = new Text(880, 68, hpS + Hero.getInstance().getHP() + (Hero.getInstance().getMAXHP() < Hero.getInstance().getHP() ? " +++" : ""));
+            text = new Text(1640, 88, hpS + Hero.getInstance().getHP() + (Hero.getInstance().getMAXHP() < Hero.getInstance().getHP() ? " +++" : ""));
             text.setFont(Font.font("Droid Sans Bold", 12));
             text.setFill(Color.rgb(255, 255, 255));
             root.getChildren().add(text);
 
 
             //Dungeon lvl
-            text = new Text(850, 88, "Dungeon level: " + sf.lvl);
+            text = new Text(1620, 148, "Dungeon level: " + sf.lvl);
             text.setFont(Font.font("Droid Sans Bold", 12));
             text.setFill(Color.rgb(255, 255, 153));
             root.getChildren().add(text);
@@ -479,23 +395,23 @@ public class Rasterizer2 {
                         hp = hp + "▓";
                     }
 
-                    text = new Text(900, 108, hp);
+                    text = new Text(1620, 128, hp);
                     text.setFont(Font.font("Droid Sans Bold", 12));
                     text.setFill(Color.rgb(255, 51, 51));
                     root.getChildren().add(text);
 
-                    text = new Text(850, 108, "Enemy: ");
+                    text = new Text(1620, 108, "Enemy: ");
                     text.setFont(Font.font("Droid Sans Bold", 12));
                     text.setFill(Color.rgb(255, 255, 153));
                     root.getChildren().add(text);
 
 
-                    text = new Text(900, 108, field[Hero.getInstance().posX][Hero.getInstance().posY].enemy.enemyName + " lvl. " + field[Hero.getInstance().posX][Hero.getInstance().posY].enemy.level);
+                    text = new Text(1680, 108, field[Hero.getInstance().posX][Hero.getInstance().posY].enemy.enemyName + " lvl. " + field[Hero.getInstance().posX][Hero.getInstance().posY].enemy.level);
                     text.setFont(Font.font("Droid Sans Bold", 12));
                     text.setFill(Color.rgb(255, 255, 153));
                     root.getChildren().add(text);
 
-                    text = new Text(850, 128, "" + CharAction.getInstance().dmgToEnemy + " dmg. VS " + CharAction.getInstance().dmgToHero + " dmg.");
+                    text = new Text(1620, 168, "" + CharAction.getInstance().dmgToEnemy + " dmg. VS " + CharAction.getInstance().dmgToHero + " dmg.");
                     text.setFont(Font.font("Droid Sans Bold", 12));
                     text.setFill(Color.rgb(255, 51, 51));
                     root.getChildren().add(text);
@@ -503,7 +419,7 @@ public class Rasterizer2 {
             }
 
             //Info line
-            text = new Text(850, 788, "[m] map  [i] inventory");
+            text = new Text(1620, 788, "[m] map  [i] inventory");
             text.setFont(Font.font("Droid Sans Bold", 12));
             text.setFill(Color.rgb(153, 153, 92));
             root.getChildren().add(text);
@@ -532,8 +448,8 @@ public class Rasterizer2 {
                     for (int j = 0; j < sf.HEIGHT; j++) {
                         ImageView img = new ImageView();
                         img.setImage(imgDarkness);
-                        img.setX(x + (i * 16));
-                        img.setY(y + (j * 16));
+                        img.setX(x + (i * 32));
+                        img.setY(y + (j * 32));
                         double alpha = 0.9;
                         //double alpha = 0.0;
                         if (field[i][j].visible) {
@@ -578,55 +494,54 @@ public class Rasterizer2 {
                     continue;
                 } else {
 //                    if (field[i][j].icon == AmbientWall.icon) {
-//                        if (crossingLines(heroI * 16, heroJ * 16, sqI * 16, sqJ * 16, i * 16 - 8, j * 16 - 8, i * 16 + 8, j * 16 + 8)) {
+//                        if (crossingLines(heroI * 32, heroJ * 32, sqI * 32, sqJ * 32, i * 32 - 8, j * 32 - 8, i * 32 + 8, j * 32 + 8)) {
 //                            alpha = alpha + 0.425;
 //                        }
 //
-//                        if (crossingLines(heroI * 16, heroJ * 16, sqI * 16, sqJ * 16, i * 16 - 8, j * 16 + 8, i * 16 + 8, j * 16 - 8)) {
+//                        if (crossingLines(heroI * 32, heroJ * 32, sqI * 32, sqJ * 32, i * 32 - 8, j * 32 + 8, i * 32 + 8, j * 32 - 8)) {
 //                            alpha = alpha + 0.425;
 //                        }
 //                    }
                     if (field[i][j].icon == AmbientWall.icon) {
                         //1 corner
 
-                        if (crossingLines(heroI * 16, heroJ * 16, sqI * 16 - 8, sqJ * 16 - 8, i * 16 - 8, j * 16 - 8, i * 16 + 8, j * 16 + 8)) {
+                        if (crossingLines(heroI * 32, heroJ * 32, sqI * 32 - 16, sqJ * 32 - 16, i * 32 - 16, j * 32 - 16, i * 32 + 16, j * 32 + 16)) {
                             alpha = alpha + alphaMult;
                         }
 
-                        if (crossingLines(heroI * 16, heroJ * 16, sqI * 16 - 8, sqJ * 16 - 8, i * 16 - 8, j * 16 + 8, i * 16 + 8, j * 16 - 8)) {
+                        if (crossingLines(heroI * 32, heroJ * 32, sqI * 32 - 16, sqJ * 32 - 16, i * 32 - 16, j * 32 + 16, i * 32 + 16, j * 32 - 16)) {
                             alpha = alpha + alphaMult;
                         }
                         //2 corner
-                        if (crossingLines(heroI * 16, heroJ * 16, sqI * 16 - 8, sqJ * 16 + 8, i * 16 - 8, j * 16 - 8, i * 16 + 8, j * 16 + 8)) {
+                        if (crossingLines(heroI * 32, heroJ * 32, sqI * 32 - 16, sqJ * 32 + 16, i * 32 - 16, j * 32 - 16, i * 32 + 16, j * 32 + 16)) {
                             alpha = alpha + alphaMult;
                         }
 
-                        if (crossingLines(heroI * 16, heroJ * 16, sqI * 16 - 8, sqJ * 16 + 8, i * 16 - 8, j * 16 + 8, i * 16 + 8, j * 16 - 8)) {
+                        if (crossingLines(heroI * 32, heroJ * 32, sqI * 32 - 16, sqJ * 32 + 16, i * 32 - 16, j * 32 + 16, i * 32 + 16, j * 32 - 16)) {
                             alpha = alpha + alphaMult;
                         }
                         //3 corner
-                        if (crossingLines(heroI * 16, heroJ * 16, sqI * 16 + 8, sqJ * 16 + 8, i * 16 - 8, j * 16 - 8, i * 16 + 8, j * 16 + 8)) {
+                        if (crossingLines(heroI * 32, heroJ * 32, sqI * 32 + 16, sqJ * 32 + 16, i * 32 - 16, j * 32 - 16, i * 32 + 16, j * 32 + 16)) {
                             alpha = alpha + alphaMult;
                         }
 
-                        if (crossingLines(heroI * 16, heroJ * 16, sqI * 16 + 8, sqJ * 16 + 8, i * 16 - 8, j * 16 + 8, i * 16 + 8, j * 16 - 8)) {
+                        if (crossingLines(heroI * 32, heroJ * 32, sqI * 32 + 16, sqJ * 32 + 16, i * 32 - 16, j * 32 + 16, i * 32 + 16, j * 32 - 16)) {
                             alpha = alpha + alphaMult;
                         }
                         //4 corner
-                        if (crossingLines(heroI * 16, heroJ * 16, sqI * 16 + 8, sqJ * 16 - 8, i * 16 - 8, j * 16 - 8, i * 16 + 8, j * 16 + 8)) {
+                        if (crossingLines(heroI * 32, heroJ * 32, sqI * 32 + 16, sqJ * 32 - 16, i * 32 - 16, j * 32 - 16, i * 32 + 16, j * 32 + 16)) {
                             alpha = alpha + alphaMult;
                         }
 
-                        if (crossingLines(heroI * 16, heroJ * 16, sqI * 16 + 8, sqJ * 16 - 8, i * 16 - 8, j * 16 + 8, i * 16 + 8, j * 16 - 8)) {
+                        if (crossingLines(heroI * 32, heroJ * 32, sqI * 32 + 16, sqJ * 32 - 16, i * 32 - 16, j * 32 + 16, i * 32 + 16, j * 32 - 16)) {
                             alpha = alpha + alphaMult;
                         }
-
                     }
                 }
             }
         }
 
-        double d = ((Math.sqrt(Math.pow(Math.abs(heroI - sqI), 2) + Math.pow(Math.abs(heroJ - sqJ), 2))) % 16) * 0.04;
+        double d = ((Math.sqrt(Math.pow(Math.abs(heroI - sqI), 2) + Math.pow(Math.abs(heroJ - sqJ), 2))) ) * 0.07;
         alpha = alpha + d;
         if (alpha > 0.9) {
             alpha = 0.9;

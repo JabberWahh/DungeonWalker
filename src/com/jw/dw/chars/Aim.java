@@ -35,8 +35,8 @@ public class Aim {
         posY = 0;
 
         //Firstly chek for actionSpots
-        for (int i = 0; i < wf.HEIGHT; i++) {
-            for (int j = 0; j < wf.WIDTH; j++) {
+        for (int i = 0; i < wf.WIDTH; i++) {
+            for (int j = 0; j < wf.HEIGHT; j++) {
                 if (wf.worldField[i][j].kind == AmbientEnum.ActionSpot && wf.worldField[i][j].visible && !wf.worldField[i][j].activated) {
                     posX = i;
                     posY = j;
@@ -46,8 +46,8 @@ public class Aim {
 
         boolean doorChosen = false;
         if (posX == 0 &&!toDoor) {//for chests
-            for (int i = 1; i < wf.HEIGHT &&!doorChosen; i++) {
-                for (int j = 1; j < wf.WIDTH&&!doorChosen; j++) {
+            for (int i = 1; i < wf.WIDTH &&!doorChosen; i++) {
+                for (int j = 1; j < wf.HEIGHT&&!doorChosen; j++) {
                     if (wf.worldField[i][j].kind == AmbientEnum.Chest && wf.worldField[i][j].visible && !wf.worldField[i][j].activated) {
                         posX = i;
                         posY = j;
