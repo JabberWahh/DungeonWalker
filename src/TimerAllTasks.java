@@ -48,7 +48,7 @@ class TimerAllTasks {
 
         //healing by regen
         //Activation
-        if (!Flask.isActivatedFlaskByKind(FlaskKind.HealTime) && (hero.getMAXHP() * 0.6) > hero.getHP()) {
+        if (!Flask.isActivatedFlaskByKind(FlaskKind.HealTime) && (hero.getMAXHP() * 0.6) > hero.getHP() && hero.getHP() >= 0) {
             boolean isPermanent = false;
             for (int i = 0; i < hero.flasks.size(); i++) {
                 if (hero.flasks.get(i).flaskKind == FlaskKind.HealPermanent) {
